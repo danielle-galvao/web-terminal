@@ -3,10 +3,6 @@
 
 @import "{{ site.theme }}";
 
-a.pagelink:link{
- color: white;
-}
-
 a.pagelink:active{
  color: white;
 }
@@ -16,6 +12,10 @@ a.pagelink:hover{
  text-decoration: underline;
 }
 
+a.pagelink:link{
+	color: white;
+text-decoration: none;
+}
 
 
 

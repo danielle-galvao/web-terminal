@@ -3,10 +3,17 @@
 
 @import "{{ site.theme }}";
 
-a:link{
-background-color: orange;
+a:pagelink:link{
+ color: white;
 }
 
-a:hover{
-	background-color: red;
+a:pagelink:hover{
+ color: lightgray;
 }
+
+a:pagelink:visited{
+ color: darkgray;
+}
+
+
+

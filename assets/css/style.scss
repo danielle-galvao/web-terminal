@@ -1,0 +1,12 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+a:link{
+background-color: orange;
+}
+
+a:hover{
+	background-color: red;
+}

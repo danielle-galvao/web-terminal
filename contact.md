@@ -5,5 +5,4 @@ permalink: /contact/
 ---
 
 # Contact
-Our Gitter Community: 
-https://gitter.im/web-terminal/community
+[Our Gitter Community:](https://gitter.im/web-terminal/community)

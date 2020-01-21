@@ -3,15 +3,15 @@
 
 @import "{{ site.theme }}";
 
-a:pagelink:link{
+a.pagelink:link{
  color: white;
 }
 
-a:pagelink:hover{
+a.pagelink:hover{
  color: lightgray;
 }
 
-a:pagelink:visited{
+a.pagelink:visited{
  color: darkgray;
 }
 

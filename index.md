@@ -1,2 +1,2 @@
-# Testing Index Page
+# Home
 

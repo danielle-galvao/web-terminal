@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://raw.githubusercontent.com/marioizquierdo/jquery.serializeJSON/master/jquery.serializejson.js"></script>
 <script src="js/script.js"></script>
 </head>
@@ -17,6 +17,16 @@
 
         <button>Display input as JSON</button>
 	<div id="textDiv"></div>
+	<div id="text123" class="text123">Highlight and Right Click a Command to View Man Page: ls</div>
+
+	<nav id="context-menu" class="context-menu">
+    	<ul class="context-menu__items">
+      		<li class="context-menu__item">
+        		<a href="#" class="context-menu__link" data-action="View"><i class="fa fa-eye"></i> View Man Page</a>
+      		</li>
+    	</ul>
+ 	</nav>
+
 
     </body>
 </html>

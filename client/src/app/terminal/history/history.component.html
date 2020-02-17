@@ -1,0 +1,3 @@
+<web-terminal-history-command [command]="command.command"></web-terminal-history-command>
+<button (click)="toggleOutput()">Toggle Output</button>
+<web-terminal-history-output *ngIf="show" [output]="command.output"></web-terminal-history-output>

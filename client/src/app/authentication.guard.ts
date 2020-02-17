@@ -3,6 +3,9 @@ import { CanActivateChild, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, R
 import { Observable } from 'rxjs';
 import { BackendService } from './backend.service';
 
+/**
+ * Guard to make sure that users can only load certain pages if they have already authenticated with the server
+ */
 @Injectable({
   providedIn: 'root'
 })

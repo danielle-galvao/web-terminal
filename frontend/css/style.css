@@ -1,5 +1,122 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+.terminalform {
+  position: relative;
+  background: #FFFFFF;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: left;
+}
+
+.terminalbody{
+ background: #FFFFFF;
+}
+
+/* The sidebar menu */
+.sidebar {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 2;
+  top: 0;
+  right: 0;
+  background-color: #EEEEEE; 
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+}
+
+/* The sidebar links */
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #000000;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.closebtn {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  z-index: 3;
+  display: none;
+  font-size: 20px;
+  margin-right: 250px;
+  background-color: #777;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+
+}
+
+.closebtn:hover {
+  background-color: #444;
+}
+
+
+/* The button used to open the sidebar */
+.openbtn{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  z-index: 1;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #777;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+/* Style the button that is used to open and close the collapsible content */
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.collapsible:after {
+  content: '\002B';
+  color: white;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #f1f1f1;
+}
+
 .login-page {
   width: 360px;
   padding: 8% 0 0;
@@ -101,5 +218,6 @@ letter-spacing:-1px;
 
 
 body {
+  font-family:Consolas,"Courier New", Courier, monospace;
   background: #e2f1f9; /* fallback for old browsers */
 }

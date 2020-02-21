@@ -3,6 +3,8 @@
 
 @import "{{ site.theme }}";
 
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+	
 a.pagelink{
 	color: white;
 }
@@ -12,6 +14,9 @@ a.pagelink:hover{
  text-decoration: underline;
 }
 
+a {
+  font-family: "Quicksand";
+}
 
 
 

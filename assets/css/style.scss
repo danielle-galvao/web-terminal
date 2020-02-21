@@ -18,6 +18,7 @@ a.logoImage{
  position: absolute;
  top: -50px;
  right: 250px;
+ max-width: 100%;
 }
 
 
@@ -30,22 +31,3 @@ p, h1, h2, a {
   font-family: "Quicksand";
 }
 
-@media only screen and (max-width: 767px) {
- header a.logoImage {
-    position: relative;
-    display: inline-block;
-    width: auto;
-    height: auto;
-    padding: 5px 10px;
-    margin-top: 15px;
-    font-size: 13px;
-    line-height: 1;
-    color: #2879d0;
-    text-align: center;
-    background-color: #9ddcff;
-    background-image: none;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-  }
-}

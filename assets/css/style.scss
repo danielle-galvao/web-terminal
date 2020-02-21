@@ -31,3 +31,8 @@ p, h1, h2, a {
   font-family: "Quicksand";
 }
 
+@media screen and (max-width:480px) {  
+  a.logoImage{
+    display: none;
+  }
+}

@@ -1,0 +1,105 @@
+.sidebar {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 2;
+	top: 0;
+	right: 0;
+	background-color: #EEEEEE;
+	overflow-x: hidden;
+	padding-top: 60px;
+}
+
+.sidebar a {
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;
+	font-size: 25px;
+	color: #000000;
+	display: block;
+	transition: 0.3s;
+}
+
+.sidebar a:hover{
+	color: #f1f1f1;
+}
+
+
+.openbtn {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	z-index: 1;
+	font-size: 20px;
+	cursor: pointer;
+	background-color: #777;
+	color: white;
+	padding: 10px 15px;
+	border: none;
+}
+
+.openbtn:hover{
+	background-color: #444;
+}
+
+.closebtn {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	z-index: 3;
+	display: none;
+	font-size: 20px;
+	margin-right: 250px;
+	background-color: #777;
+	color: white;
+	padding: 10px 15px;
+	border: none;
+	cursor: pointer;
+}
+
+.closebtn:hover {
+	background-color: #444;
+}
+
+.collapsible {
+	background-color: #777;
+	color: white;
+	cursor: pointer;
+	padding: 18px;
+	width: 100%;
+	border: none;
+	text-align: left;
+	outline: none;
+	font-size: 15px;
+}
+
+.active, .collapsible:hover {
+	background-color: #555;
+}
+
+.collapsible:after {
+	content: '\002B';
+	color: white;
+	font-weight: bold;
+	float: right;
+	margin-left: 5px;
+}
+
+.active:after {
+	content: "\2212";
+}
+
+.content {
+	padding: 0 18px;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.2s ease-out;
+	background-color: #f1f1f1;
+	font-family: "Roboto", sans-serif;
+	font-size: 14px;
+}
+
+.p {
+	font-family: "Roboto", sans-serif;
+	font-size: 14px;
+	background: #2d77cc;
+}

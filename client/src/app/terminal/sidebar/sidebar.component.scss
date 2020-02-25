@@ -10,15 +10,6 @@
 	padding-top: 60px;
 }
 
-.sidebar a {
-	padding: 8px 8px 8px 32px;
-	text-decoration: none;
-	font-size: 25px;
-	color: #000000;
-	display: block;
-	transition: 0.3s;
-}
-
 .sidebar a:hover{
 	color: #f1f1f1;
 }
@@ -102,4 +93,19 @@
 	font-family: "Roboto", sans-serif;
 	font-size: 14px;
 	background: #2d77cc;
+}
+
+.webLink {
+	text-decoration: none;
+	font-family: "Roboto", sans-serif;
+	font-size: 14px;
+	padding: 8px 8px 8px 32px;
+	color: #000000;
+	display: block;
+	transition: 0.3s;
+	
+}
+
+.webLink:hover {
+	background-color: #777;
 }

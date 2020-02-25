@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 
 /**
  * A component for rendering previous commands that were run
@@ -10,11 +10,15 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class HistoryCommandComponent implements OnInit {
 
-  @Input() command;
+  @Input() command: string;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+  
+  copy() {
+    window.navigator.clipboard.writeText(this.command);
   }
 
 }

@@ -2,7 +2,7 @@ button {
     display: none;
 }
 
-input{
+#command-line-input {
 	font-family: "Courier New", Courier, monospace;
   width: 98%;
   padding: 2px;
@@ -12,3 +12,11 @@ input{
 .terminal-text{
 	font-family: "Courier New", Courier, monospace;
 }
+
+
+// min-width: 12rem; //fallback
+// min-width: 15ch;
+// height: 1rem;
+// display: inline-block;
+// padding-right: 10ch;
+// border: blue 1px solid;

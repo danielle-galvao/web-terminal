@@ -1,7 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { of } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { Observable, OperatorFunction, throwError } from 'rxjs';
+import { map, filter, shareReplay, scan, mapTo, takeWhile, timeoutWith } from 'rxjs/operators';
+import { webSocket } from 'rxjs/webSocket';
+
+const ofType = (type: string | string[]) => (Array.isArray(type)) ? filter((message) => type.indexOf(message["type"]) >= 0) : filter((message) => message["type"] == type);
+
+const mapToPayload = map((message: unknown) => message["payload"]);
+
+const throwErrorMessage = map((message: unknown) => {
+  if(message["result"] == "error") {
+    throw message;
+  }
+  return message;
+});
+
+const isOk: OperatorFunction<any, boolean> = map(message => message["result"] == "ok");
 
 /**
  * This service is responsible for handling communication with the backend
@@ -11,21 +24,47 @@ import { map, shareReplay } from 'rxjs/operators';
 })
 export class BackendService {
 
-  private hasAuthenticated: boolean;
+  private websocket;
 
-  private subject = new Subject<any>();
+  private clientId = 0;
 
-  private id = 0;
+  history$;
+  authenticated$: Observable<boolean>;
 
-  constructor() { }
+  constructor() {
+    this.websocket = webSocket("ws://localhost:8888");
+    this.websocket.subscribe();
+    
+    this.authenticated$ = this.websocket.pipe(
+      ofType("authentication"),
+      mapToPayload,
+      isOk,
+      shareReplay(1)
+    );
+    this.authenticated$.subscribe(console.log);
+
+    // TODO init here or upon construction?
+    this.history$ = this.websocket.pipe(
+      ofType(["command", "update"]),
+      scan((history, message: any) => {
+        if(message.type == "command" && message.payload.result == "ok") {
+          history[message.payload.clientId] = {...history[message.payload.clientId], ...message.payload};
+        } else if(message.type == "update") {
+          history[message.payload.clientId].output = (history[message.payload.clientId]?.output || '') + message.payload.output.stdout;
+        }
+        return history;
+      }, []),
+      shareReplay(1));
+      this.history$.subscribe(console.log);
+   }
 
   /**
-   * Somehow checks if the user had been successfully authenticated - LocalStorage?
+   * Returns an observable which indicates whether a message of successful authentication has been recieved
    */
   isAuthenticated() {
     // TODO
     console.log('Check that user has already successfully authenticated');
-    return this.hasAuthenticated;
+    return this.authenticated$;
   }
 
   /**
@@ -33,12 +72,18 @@ export class BackendService {
    * @param token the token provided by the user to submit
    * @returns whether it was successful or not
    */
-  authenticate(token: string): Observable<boolean> {
-    // TODO
+  authenticate(token: string) {
     console.log('Submitting token ' + token + ' to backend');
-    this.hasAuthenticated = true;
-
-    return of(true);
+    const result: Observable<boolean> = this.websocket.pipe(
+      ofType("authentication"),
+      mapToPayload,
+      throwErrorMessage,
+      isOk,
+      timeoutWith(1000, throwError({ message: "Timed out"}))
+      // TODO link this timeout with the one in the router guard so they trigger at same time?
+    );
+    this.websocket.next({type: "authentication", payload: {token}});
+    return result;
   }
 
   /**
@@ -46,11 +91,14 @@ export class BackendService {
    * @returns the past commands
    */
   getHistory(): Observable<any[]> {
-    let history: any[] = [];
-    return this.subject.pipe(map((event) => {
-      history.push(event);
-      return history;
-    }), shareReplay());
+    return this.history$;
+  }
+
+  getHistoryFor(clientId: number) {
+    return this.history$.pipe(
+      map(commands => commands[clientId]),
+      takeWhile(command => command["status"] == "running", true)
+    );
   }
 
   /**
@@ -60,37 +108,16 @@ export class BackendService {
    */
   sendCommand(command: any): Observable<boolean>  {
     console.log('Submitting command ' + command + ' to backend');
-    // TODO replace fake results
-    switch(command.split(' ')[0]) {
-      case 'ls': {
-        this.subject.next({
-            id: this.id++,
-            command,
-            output: {
-              stdin: "",
-              stdout: "<img id='bui' src='../assets/bui.png' width='130' height='200'/>",
-//              stdout: "<a href=\"./bui.png\">bui.png</a>",
-              stderr: ""
-            },
-            time: "0:69s"
-        });
-      }
-      break;
-      case 'echo': {
-        this.subject.next({
-            id: this.id++,
-            command,
-            output: {
-              stdin: "",
-              stdout: command.substring(command.indexOf(' ')),
-              stderr: ""
-            },
-            time: "0.0s"
-        });
-      }
-      break;
-    }
-    return of(true);
+    this.websocket.next({type: "command", payload: {
+      command,
+      clientId: this.clientId ++
+    }});
+
+    return this.websocket.pipe(
+      ofType("command"),
+      throwErrorMessage,
+      isOk
+    );
   }
 
 }

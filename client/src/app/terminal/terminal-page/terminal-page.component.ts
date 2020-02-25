@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from 'src/app/backend.service';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 /**
  * This page is the actual 'terminal' the user opens after authenticating
@@ -14,15 +15,14 @@ export class TerminalPageComponent implements OnInit {
   history$: Observable<any[]>;
 
   constructor(private backend: BackendService) {
-    this.history$ = backend.getHistory();
-    this.history$.subscribe(console.log);
+    this.history$ = backend.getHistory().pipe(map(history => [...history.keys()]));
   }
 
   ngOnInit(): void {
   }
 
   commandId(command) {
-    return command.id;
+    return command.clientId;
   }
 	contextmenuMan= false;
   contextmenuPipe= false;

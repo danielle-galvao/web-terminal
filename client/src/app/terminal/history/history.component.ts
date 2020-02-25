@@ -1,4 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Observable } from 'rxjs';
+import { BackendService } from 'src/app/backend.service';
+import { map } from 'rxjs/operators';
 
 /**
  * A component for rendering past commands and past commands' outputs
@@ -8,14 +11,16 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss']
 })
-export class HistoryComponent implements OnInit {
+export class HistoryComponent implements OnChanges {
 
-  @Input() command;
+  @Input() commandId;
+  command$: Observable<any>;
   show = false;
 
-  constructor() { }
+  constructor(private backendService: BackendService) { }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
+    this.command$ = this.backendService.getHistoryFor(this.commandId);
   }
 
   toggleOutput() {

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CanActivateChild, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanLoad, Route, Router, UrlSegment } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { BackendService } from './backend.service';
+import { tap, timeoutWith, take } from 'rxjs/operators';
 
 /**
  * Guard to make sure that users can only load certain pages if they have already authenticated with the server
@@ -9,22 +10,17 @@ import { BackendService } from './backend.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationGuard implements CanActivateChild, CanLoad {
-  constructor(private backend: BackendService){
+export class AuthenticationGuard implements CanLoad {
+  constructor(private backend: BackendService, private router: Router){
 
-  }
-
-  canActivateChild(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    
-    return this.backend.isAuthenticated();
   }
 
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-
-    return this.backend.isAuthenticated();
+      return this.backend.isAuthenticated().pipe(
+        timeoutWith(1000, of(false)),
+        take(1),
+        tap(isAuthenticated => { if(!isAuthenticated) this.router.navigateByUrl('/') }));
   }
 }

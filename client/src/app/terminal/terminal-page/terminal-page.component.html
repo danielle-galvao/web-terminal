@@ -1,0 +1,7 @@
+<div *ngIf="history$ | async as history">
+    <div *ngFor="let command of history; trackBy: commandId;">
+        <web-terminal-history [command]="command"></web-terminal-history>
+    </div>
+</div>
+<web-terminal-command-line></web-terminal-command-line>
+<web-terminal-sidebar></web-terminal-sidebar>

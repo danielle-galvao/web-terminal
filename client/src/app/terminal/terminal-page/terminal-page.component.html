@@ -1,7 +1,12 @@
-<div *ngIf="history$ | async as history">
-    <div *ngFor="let command of history; trackBy: commandId;">
-        <web-terminal-history [command]="command"></web-terminal-history>
-    </div>
+<div (click)="disableContextMenu()" oncontextmenu="return false;">
+	<div (contextmenu)="onRightClick($event)" *ngIf="history$ | async as history">
+    		<div (contextmenu)="onRightClick($event)" *ngFor="let command of history; trackBy: commandId;">
+        		<web-terminal-history (contextmenu)="onRightClick($event)" [command]="command"></web-terminal-history>
+    		</div>
+	</div>
+	<web-terminal-command-line (contextmenu)="onRightClick($event)"></web-terminal-command-line>
+	<div *ngIf="contextmenu">
+		<web-terminal-man-page [x]="contextmenuX" [y]="contextmenuY" [command]="contextmenuCommand"></web-terminal-man-page>
+	</div>
+	<web-terminal-sidebar></web-terminal-sidebar>
 </div>
-<web-terminal-command-line></web-terminal-command-line>
-<web-terminal-sidebar></web-terminal-sidebar>

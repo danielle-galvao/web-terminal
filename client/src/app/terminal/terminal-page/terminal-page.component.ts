@@ -24,5 +24,26 @@ export class TerminalPageComponent implements OnInit {
   commandId(command) {
     return command.id;
   }
+	contextmenu= false;
+	contextmenuX= 0;
+	contextmenuY= 0;
+	contextmenuCommand = "";
+	commandsSupported= ["ls", "echo"]
+
+	//activates the context menu with the coordinates
+	onRightClick(event){
+		var textSelected = window.getSelection().toString().trim();
+		if(this.commandsSupported.includes(textSelected)){
+			this.contextmenuX=event.clientX;
+			this.contextmenuY=event.clientY;
+			this.contextmenu=true;
+			this.contextmenuCommand=textSelected;
+		}
+	}
+
+	//disables the menu
+	disableContextMenu(){
+		this.contextmenu=false;
+	}
 
 }

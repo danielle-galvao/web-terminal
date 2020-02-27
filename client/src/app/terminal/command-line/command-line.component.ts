@@ -17,6 +17,7 @@ export class CommandLineComponent implements OnInit {
 
   sendCommand() {
     this.backend.sendCommand(this.command.nativeElement.value);
+    this.command.nativeElement.value = "";
     // TODO handle observable
     return false;
   }

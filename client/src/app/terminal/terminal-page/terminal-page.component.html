@@ -4,9 +4,12 @@
         		<web-terminal-history (contextmenu)="onRightClick($event)" [command]="command"></web-terminal-history>
     		</div>
 	</div>
-	<web-terminal-command-line (contextmenu)="onRightClick($event)"></web-terminal-command-line>
-	<div *ngIf="contextmenu">
+	<web-terminal-command-line (contextmenu)="onRightClickCommand($event)"></web-terminal-command-line>
+	<div *ngIf="contextmenuMan">
 		<web-terminal-man-page [x]="contextmenuX" [y]="contextmenuY" [command]="contextmenuCommand"></web-terminal-man-page>
+	</div>
+	<div *ngIf="contextmenuPipe">
+		<web-terminal-pipeline (click)="addBreakpoint()" [x]="contextmenuX" [y]="contextmenuY" [command]="contextmenuCommand" [endcommand]="endCommand"></web-terminal-pipeline>
 	</div>
 	<web-terminal-sidebar></web-terminal-sidebar>
 </div>

@@ -8,7 +8,7 @@ import { AuthPageComponent } from './auth-page/auth-page.component';
 @NgModule({
   declarations: [
     AppComponent,
-    AuthPageComponent
+    AuthPageComponent,
   ],
   imports: [
     BrowserModule,

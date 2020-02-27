@@ -24,11 +24,13 @@ export class TerminalPageComponent implements OnInit {
   commandId(command) {
     return command.id;
   }
-	contextmenu= false;
+	contextmenuMan= false;
+  contextmenuPipe= false;
 	contextmenuX= 0;
 	contextmenuY= 0;
 	contextmenuCommand = "";
 	commandsSupported= ["ls", "echo"]
+  endCommand = "";
 
 	//activates the context menu with the coordinates
 	onRightClick(event){
@@ -36,14 +38,48 @@ export class TerminalPageComponent implements OnInit {
 		if(this.commandsSupported.includes(textSelected)){
 			this.contextmenuX=event.clientX;
 			this.contextmenuY=event.clientY;
-			this.contextmenu=true;
+			this.contextmenuMan=true;
 			this.contextmenuCommand=textSelected;
 		}
 	}
 
+  //activates the context menu with the coordinates
+  onRightClickCommand(event){
+    var textSelected = window.getSelection().toString().trim();
+    if(this.commandsSupported.includes(textSelected)){
+      this.contextmenuX=event.clientX;
+      this.contextmenuY=event.clientY;
+      this.contextmenuMan=true;
+      this.contextmenuCommand=textSelected;
+    }
+    else if(textSelected != "" && textSelected.charAt(textSelected.length-1) == "|"){
+      var splitCommand = textSelected.slice(0, -1);
+      this.contextmenuX=event.clientX;
+      this.contextmenuY=event.clientY;
+      this.contextmenuPipe=true;
+      this.contextmenuCommand=splitCommand
+      var fullCommand = (<HTMLInputElement>document.getElementById("commandId")).value;
+      var firstHalf = window.getSelection().toString().length;
+      var secondHalf = fullCommand.slice(firstHalf).trim();
+      this.endCommand=secondHalf;
+      //<span style="font-size: 8px; color: transparent;  text-shadow: 0 0 0 red; ">&#9899;</span> {{endcommand}} </div>
+
+
+    //  alert(this.contextmenuCommand);
+//      alert((<HTMLInputElement>document.getElementById("commandId")).value);
+
+    }
+
+  }
+
+  addBreakpoint(){
+    (<HTMLInputElement>document.getElementById("commandId")).value = this.contextmenuCommand + '⭕ ' + this.endCommand;
+  }
+
 	//disables the menu
 	disableContextMenu(){
-		this.contextmenu=false;
+		this.contextmenuMan=false;
+    this.contextmenuPipe=false;
 	}
 
 }

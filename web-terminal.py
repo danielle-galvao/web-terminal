@@ -69,10 +69,17 @@ app = Flask(__name__, template_folder='./frontend/')
 def login():
     return render_template('authenticate.html')
 
-if __name__ == '__main__':
-    #print('Starting web server...')
-    #app.run()
+def runFlask():
+    print('Starting web server...')
+    app.run()
 
+if __name__ == '__main__':
+    web_server_thread = threading.Thread(
+            target = runFlask, 
+            daemon = True
+    )
+    web_server_thread.start()
+ 
     print('Starting sockets...')
     start_server = websockets.serve(recCommand, 'localhost', 6969)
     asyncio.get_event_loop().run_until_complete(start_server)

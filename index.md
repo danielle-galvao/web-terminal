@@ -1,5 +1,10 @@
 # Home
 
+## Our Initial Prototype: March 2020
+We have spent the last several weeks developing the initial version of our minimum viable product.
+View our progress [here!](https://danielle-galvao.github.io/web-terminal/contact/)
+
+
 ## Our Project Vision: February 2020
 Welcome to our Open Source Web Terminal Project site! Our goal for this project is to design and create a user-friendly terminal emulator, keeping in mind the person behind the screen as we develop each aspect along the way.
 

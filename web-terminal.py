@@ -4,14 +4,22 @@ import queue, subprocess, sys, threading
 
 import asyncio, websockets
 
+import json
+
 async def recCommand(websocket, path):
     STDIN = await websocket.recv()
     print(f'< {STDIN}')
+    STDIN_JSON = json.loads(STDIN)
 
-    STDOUT = await writeToShell(STDIN)
+    STDOUT = await writeToShell(STDIN_JSON['payload']['command'])
+    
+    STDOUT_JSON = '{"type": "update", "payload": {"output": "NONE"}}'
+    STDOUT_JSON = json.loads(STDOUT_JSON)
+    STDOUT_JSON["payload"]["output"] = STDOUT
+
     print(f'> {STDOUT}')
 
-    await websocket.send(STDOUT)
+    await websocket.send(STDOUT_JSON)
 
 def enqueue_output(stream, queue):
     ''' Read from stream and put line in queue '''
@@ -67,7 +75,7 @@ app = Flask(__name__, template_folder='./frontend/', static_folder='./frontend/'
 
 @app.route('/')
 def login():
-    return render_template('authenticate.html')
+    return render_template('terminal.html')
 
 def runFlask():
     print('Starting web server...')

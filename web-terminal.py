@@ -6,20 +6,41 @@ import asyncio, websockets
 
 import json
 
+def ls_to_html(STDOUT):
+    toParse = STDOUT.splitlines()
+    endParse = []
+
+    for f in toParse:
+        if '.' in f:
+            fType = f.split('.')[-1]
+            if fType in ['jpg', 'png', 'jpeg']:
+                endParse.append(f'<img src="{f}">')
+                break
+        endParse.append(f'<a href="{f}">{f}</a>')
+
+    return '\n'.join(endParse)
+
+
 async def recCommand(websocket, path):
     STDIN = await websocket.recv()
     print(f'< {STDIN}')
     STDIN_JSON = json.loads(STDIN)
 
-    STDOUT = await writeToShell(STDIN_JSON['payload']['command'])
+    cmd = STDIN_JSON['payload']['command']
+
+    STDOUT = await writeToShell(cmd)
     
     STDOUT_JSON = '{"type": "update", "payload": {"output": "NONE"}}'
     STDOUT_JSON = json.loads(STDOUT_JSON)
+
+    if 'ls' == cmd:
+        STDOUT = ls_to_html(STDOUT)
+
     STDOUT_JSON["payload"]["output"] = STDOUT
 
-    print(f'> {STDOUT}')
+    print(f'> {json.dumps(STDOUT_JSON)}')
 
-    await websocket.send(STDOUT_JSON)
+    await websocket.send(json.dumps(STDOUT_JSON))
 
 def enqueue_output(stream, queue):
     ''' Read from stream and put line in queue '''

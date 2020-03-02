@@ -63,7 +63,7 @@ async def writeToShell(STDIN):
 
 from flask import Flask, render_template
 
-app = Flask(__name__, template_folder='./frontend/')
+app = Flask(__name__, template_folder='./frontend/', static_folder='./frontend/')
 
 @app.route('/')
 def login():

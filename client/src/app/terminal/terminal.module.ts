@@ -9,9 +9,10 @@ import { HistoryOutputComponent } from './history-output/history-output.componen
 import { HistoryCommandComponent } from './history-command/history-command.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ManPageComponent } from './man-page/man-page.component';
+import { PipelineComponent } from './pipeline/pipeline.component';
 
 @NgModule({
-  declarations: [TerminalPageComponent, CommandLineComponent, HistoryComponent, HistoryOutputComponent, HistoryCommandComponent, SidebarComponent, ManPageComponent],
+  declarations: [TerminalPageComponent, CommandLineComponent, HistoryComponent, HistoryOutputComponent, HistoryCommandComponent, SidebarComponent, ManPageComponent, PipelineComponent],
   imports: [
     CommonModule,
     TerminalRoutingModule

@@ -1,0 +1,53 @@
+.command-output{
+	font-family: "Courier New", Courier, monospace;
+}
+
+.button1{
+  background-color: #e7e7e7;
+  border: none;
+  color: black;
+  padding: 10px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	border-left: 1px solid black;
+}
+
+.button1:hover {
+  background-color: #c5c5c5;
+  color: black;
+}
+
+.button1:focus {
+  background-color: #c5c5c5;
+  color: black;
+}
+
+.button3{
+  background-color: #e7e7e7;
+  border: none;
+  color: black;
+  padding: 10px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+}
+
+.button3:hover {
+  background-color: #c5c5c5;
+  color: black;
+}
+
+.button-container{
+  padding: 10px 0px;
+}

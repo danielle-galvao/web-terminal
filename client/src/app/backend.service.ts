@@ -52,7 +52,7 @@ export class BackendService {
       return history;
     }), shareReplay());
   }
-  
+
   /**
    * Sends a command to be run
    * @param command the command to send to the backend
@@ -68,7 +68,8 @@ export class BackendService {
             command,
             output: {
               stdin: "",
-              stdout: "<a href=\"./bui.png\">bui.png</a>",
+              stdout: "<img id='bui' src='../assets/bui.png' width='130' height='200'/>",
+//              stdout: "<a href=\"./bui.png\">bui.png</a>",
               stderr: ""
             },
             time: "0:69s"

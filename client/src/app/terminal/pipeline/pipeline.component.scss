@@ -1,6 +1,4 @@
 /* context menu */
-
-
 .context-menu {
   font-family: "Roboto", sans-serif;
   position: absolute;
@@ -13,14 +11,17 @@
   cursor: pointer;
 }
 
-.man-link{
+.context-menu:hover {
+  background-color: #f6f6f6;
+}
+
+.pipeline-link{
   font-family: "Roboto", sans-serif;
 	text-decoration: none;
   color: black;
 }
 
-.man-link:hover{
+.showBreak{
   font-family: "Roboto", sans-serif;
-	text-decoration: underline;
-  color: blue;
+  display: none;
 }

@@ -2,7 +2,7 @@
 
 ## Our Initial Prototype: March 2020
 We have spent the last several weeks developing the initial version of our minimum viable product.
-View our progress [here!](https://danielle-galvao.github.io/web-terminal/initialprototype/)
+View our progress [here!](https://danielle-galvao.github.io/web-terminal/initialprototype)
 
 
 ## Our Project Vision: February 2020

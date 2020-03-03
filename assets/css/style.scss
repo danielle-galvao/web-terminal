@@ -5,23 +5,26 @@
 
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
 	
-a.pagelink{
-	color: white;
+a.pagelink {
+  color: white;
 }
 
-a.pagelink:hover{
- color: lightgray;
- text-decoration: underline;
+a.pagelink:hover {
+  color: lightgray;
+  text-decoration: underline;
 }
 
-a.logoImage{
- position: absolute;
- top: -50px;
- right: 250px;
- max-width: 100%;
+a.logoImage {
+  position: absolute;
+  top: 5px;
+  right: 60px;
+  max-width: 75%;
 }
 
-
+.logoImage img {
+  height: auto;
+  width: 50%;
+}
 
 p, h1, h2, a {
   font-family: "Quicksand";
@@ -44,14 +47,20 @@ header {
 /* Tablet Portrait to standard 960 */
 @media only screen and (min-width: 768px) and (max-width: 959px) {
   a.logoImage {
-    top: 75px;
-    right: -20px;
+    top: 115px;
+    right: -202px;
   }
 }
 
 /* Mobile */
 @media only screen and (max-width: 767px) {
   /* Move logo to left for mobile */
+  a.logoImage {
+    position: relative;
+    top: 0px;
+    right: 0px;
+  }
+    
   .logoImage img {
     width: 25%;
     height: auto;

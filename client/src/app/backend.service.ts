@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, OperatorFunction, throwError } from 'rxjs';
-import { map, filter, shareReplay, scan, mapTo, takeWhile, timeoutWith } from 'rxjs/operators';
+import { map, filter, shareReplay, scan, takeWhile, timeoutWith } from 'rxjs/operators';
 import { webSocket } from 'rxjs/webSocket';
 
 const ofType = (type: string | string[]) => (Array.isArray(type)) ? filter((message) => type.indexOf(message["type"]) >= 0) : filter((message) => message["type"] == type);
@@ -32,8 +32,8 @@ export class BackendService {
   authenticated$: Observable<boolean>;
 
   constructor() {
-    this.websocket = webSocket("ws://localhost:8888");
-    this.websocket.subscribe();
+    this.websocket = webSocket("ws://localhost:6969");
+    this.websocket.subscribe(() => {}, (err) => console.error('Socket got error ', err), () => console.log('Socket completed')); //TODO better error
     
     this.authenticated$ = this.websocket.pipe(
       ofType("authentication"),
@@ -41,7 +41,6 @@ export class BackendService {
       isOk,
       shareReplay(1)
     );
-    this.authenticated$.subscribe(console.log);
 
     // TODO init here or upon construction?
     this.history$ = this.websocket.pipe(
@@ -108,16 +107,18 @@ export class BackendService {
    */
   sendCommand(command: any): Observable<boolean>  {
     console.log('Submitting command ' + command + ' to backend');
+    const command$ = this.websocket.pipe(
+      ofType("command"),
+      throwErrorMessage,
+      isOk
+    );
+
     this.websocket.next({type: "command", payload: {
       command,
       clientId: this.clientId ++
     }});
 
-    return this.websocket.pipe(
-      ofType("command"),
-      throwErrorMessage,
-      isOk
-    );
+    return command$;
   }
 
 }

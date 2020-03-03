@@ -20,6 +20,8 @@ def ls_to_html(STDOUT):
 
     return '\n'.join(endParse)
 
+token = "token" if len(sys.argv) <= 1 else sys.argv[1]
+authenticated = set()
 
 async def recCommand(websocket, path):
     while True:
@@ -27,21 +29,38 @@ async def recCommand(websocket, path):
         print(f'< {STDIN}')
         STDIN_JSON = json.loads(STDIN)
 
-        cmd = STDIN_JSON['payload']['command']
+        if STDIN_JSON["type"] == "authentication":
+            out = None
+            if STDIN_JSON['payload']['token'] == token:
+                authenticated.add(websocket) # need to clean up authenticated
+                await websocket.send('{"type": "authentication", "payload": {"result": "ok"}}')
+            else:
+                await websocket.send('{"type": "authentication", "payload": {"result": "error", "message": "Wrong token"}}')
 
-        STDOUT = await writeToShell(cmd)
-        
-        STDOUT_JSON = '{"type": "update", "payload": {"output": "NONE"}}'
-        STDOUT_JSON = json.loads(STDOUT_JSON)
+        elif STDIN_JSON["type"] == "command":
+            if websocket not in authenticated:
+                STDOUT_JSON = '{"type": "command", "payload": {"result": "error", "message": "Not authenticated"}}'
+                STDOUT_JSON = json.loads(STDOUT_JSON)
 
-        if 'ls' == cmd:
-            STDOUT = ls_to_html(STDOUT)
+                STDOUT_JSON['payload']['clientId'] = STDIN_JSON['payload']['clientId']
 
-        STDOUT_JSON["payload"]["output"] = STDOUT
+                await websocket.send(json.dumps(STDOUT_JSON))
+            else:
+                cmd = STDIN_JSON['payload']['command']
 
-        print(f'> {json.dumps(STDOUT_JSON)}')
+                STDOUT = await writeToShell(cmd)
+                
+                STDOUT_JSON = '{"type": "update", "payload": {"output": "NONE"}}'
+                STDOUT_JSON = json.loads(STDOUT_JSON)
 
-        await websocket.send(json.dumps(STDOUT_JSON))
+                if 'ls' == cmd:
+                    STDOUT = ls_to_html(STDOUT)
+
+                STDOUT_JSON["payload"]["output"] = STDOUT
+
+                print(f'> {json.dumps(STDOUT_JSON)}')
+
+                await websocket.send(json.dumps(STDOUT_JSON))
 
 def enqueue_output(stream, queue):
     ''' Read from stream and put line in queue '''
@@ -91,13 +110,17 @@ async def writeToShell(STDIN):
 
     return STDOUT
 
-from flask import Flask, render_template
+from flask import Flask, send_from_directory
 
-app = Flask(__name__, template_folder='./frontend/', static_folder='./frontend/')
+app = Flask(__name__)
+
+@app.route('/<path:path>', methods=['GET'])
+def static_proxy(path):
+  return send_from_directory('./client/dist/web-terminal/', path)
 
 @app.route('/')
-def login():
-    return render_template('terminal.html')
+def root():
+  return send_from_directory('./client/dist/web-terminal/', 'index.html')
 
 def runFlask():
     print('Starting web server...')

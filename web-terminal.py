@@ -22,25 +22,26 @@ def ls_to_html(STDOUT):
 
 
 async def recCommand(websocket, path):
-    STDIN = await websocket.recv()
-    print(f'< {STDIN}')
-    STDIN_JSON = json.loads(STDIN)
+    while True:
+        STDIN = await websocket.recv()
+        print(f'< {STDIN}')
+        STDIN_JSON = json.loads(STDIN)
 
-    cmd = STDIN_JSON['payload']['command']
+        cmd = STDIN_JSON['payload']['command']
 
-    STDOUT = await writeToShell(cmd)
-    
-    STDOUT_JSON = '{"type": "update", "payload": {"output": "NONE"}}'
-    STDOUT_JSON = json.loads(STDOUT_JSON)
+        STDOUT = await writeToShell(cmd)
+        
+        STDOUT_JSON = '{"type": "update", "payload": {"output": "NONE"}}'
+        STDOUT_JSON = json.loads(STDOUT_JSON)
 
-    if 'ls' == cmd:
-        STDOUT = ls_to_html(STDOUT)
+        if 'ls' == cmd:
+            STDOUT = ls_to_html(STDOUT)
 
-    STDOUT_JSON["payload"]["output"] = STDOUT
+        STDOUT_JSON["payload"]["output"] = STDOUT
 
-    print(f'> {json.dumps(STDOUT_JSON)}')
+        print(f'> {json.dumps(STDOUT_JSON)}')
 
-    await websocket.send(json.dumps(STDOUT_JSON))
+        await websocket.send(json.dumps(STDOUT_JSON))
 
 def enqueue_output(stream, queue):
     ''' Read from stream and put line in queue '''

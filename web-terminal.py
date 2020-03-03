@@ -14,9 +14,9 @@ def ls_to_html(STDOUT):
         if '.' in f:
             fType = f.split('.')[-1]
             if fType in ['jpg', 'png', 'jpeg']:
-                endParse.append(f'<img src="{f}">')
+                endParse.append(f'<img src="/file/{f}">')
                 continue
-        endParse.append(f'<a href="{f}">{f}</a>')
+        endParse.append(f'<a href="/file/{f}">{f}</a>')
 
     return '\n'.join(endParse)
 
@@ -48,15 +48,24 @@ async def recCommand(websocket, path):
             else:
                 cmd = STDIN_JSON['payload']['command']
 
+                STDOUT_JSON = '{"type": "command", "payload": { "result": "ok", "serverId": -1 }}'
+                STDOUT_JSON = json.loads(STDOUT_JSON)
+                STDOUT_JSON['payload']['command'] = STDIN_JSON['payload']['command']
+                STDOUT_JSON['payload']['clientId'] = STDIN_JSON['payload']['clientId']
+
+                await websocket.send(json.dumps(STDOUT_JSON))
+
                 STDOUT = await writeToShell(cmd)
                 
-                STDOUT_JSON = '{"type": "update", "payload": {"output": "NONE"}}'
+                STDOUT_JSON = '{"type": "update", "payload": {"output": {}}}'
                 STDOUT_JSON = json.loads(STDOUT_JSON)
 
                 if 'ls' == cmd:
                     STDOUT = ls_to_html(STDOUT)
 
-                STDOUT_JSON["payload"]["output"] = STDOUT
+                STDOUT_JSON["payload"]["output"]["combined"] = STDOUT
+                STDOUT_JSON["payload"]["output"]["stdout"] = STDOUT
+                STDOUT_JSON['payload']['clientId'] = STDIN_JSON['payload']['clientId']
 
                 print(f'> {json.dumps(STDOUT_JSON)}')
 
@@ -110,17 +119,28 @@ async def writeToShell(STDIN):
 
     return STDOUT
 
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, redirect
 
 app = Flask(__name__)
 
-@app.route('/<path:path>', methods=['GET'])
-def static_proxy(path):
-  return send_from_directory('./client/dist/web-terminal/', path)
+@app.route('/file/<path:path>', methods=['GET'])
+def local_files(path):
+    return send_from_directory('./', path)
+
+@app.route('/terminal/<path:path>', methods=['GET'])
+def angular_folders(path):
+    try:
+        return send_from_directory('./client/dist/web-terminal/', path)
+    except:
+        return redirect('/', code=301)
+
+@app.route('/terminal')
+def terminal_root():
+        return send_from_directory('./client/dist/web-terminal/', 'index.html')
 
 @app.route('/')
 def root():
-  return send_from_directory('./client/dist/web-terminal/', 'index.html')
+    return redirect('/terminal', code=301)
 
 def runFlask():
     print('Starting web server...')

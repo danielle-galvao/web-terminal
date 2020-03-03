@@ -18,7 +18,12 @@ export class ManPageComponent implements OnInit {
 	@Input() command="";
 
 	url = "http://man7.org/linux/man-pages/man1/ls.1.html";
-	urls = {"ls": "http://man7.org/linux/man-pages/man1/ls.1.html","echo": "http://man7.org/linux/man-pages/man1/echo.1.html"};
+	urls = {"ls": "http://man7.org/linux/man-pages/man1/ls.1.html","echo": "http://man7.org/linux/man-pages/man1/echo.1.html",
+		"cat": "http://man7.org/linux/man-pages/man1/cat.1.html", "grep": "http://man7.org/linux/man-pages/man1/grep.1.html",  "tar": "http://man7.org/linux/man-pages/man1/tar.1.html", 
+		"find": "http://man7.org/linux/man-pages/man1/find.1.html", "awk":  "http://man7.org/linux/man-pages/man1/awk.1p.html", "diff": "http://man7.org/linux/man-pages/man1/diff.1.html",
+		"sort": "http://man7.org/linux/man-pages/man1/sort.1.html", "wc": "http://man7.org/linux/man-pages/man1/wc.1.html", "pwd": "http://man7.org/linux/man-pages/man1/pwd.1.html", "cd": "http://man7.org/linux/man-pages/man1/cd.1p.html", "mkdir": "http://man7.org/linux/man-pages/man1/mkdir.1.html", "mv": "http://man7.org/linux/man-pages/man1/mv.1.html", 
+		"rm": "http://man7.org/linux/man-pages/man1/rm.1.html", "cp": "http://man7.org/linux/man-pages/man1/cp.1.html"};
+
 	params = ""
 
 	openWindow(){

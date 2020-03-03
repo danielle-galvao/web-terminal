@@ -29,7 +29,8 @@ export class TerminalPageComponent implements OnInit {
 	contextmenuX= 0;
 	contextmenuY= 0;
 	contextmenuCommand = "";
-	commandsSupported= ["ls", "echo"]
+	commandsSupported= ["ls", "echo", "cat", "grep", "tar", "find", "awk", "diff", "sort", "wc",
+"pwd", "cd", "mkdir", "mv", "rm", "cp"]
   endCommand = "";
 
 	//activates the context menu with the coordinates
@@ -79,7 +80,7 @@ export class TerminalPageComponent implements OnInit {
 	//disables the menu
 	disableContextMenu(){
 		this.contextmenuMan=false;
-    this.contextmenuPipe=false;
+    		this.contextmenuPipe=false;
 	}
 
 }

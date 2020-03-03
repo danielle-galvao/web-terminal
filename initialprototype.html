@@ -6,19 +6,19 @@ layout: default
 <h2> Milestone 3: March 2, 2020 </h2>
 
 <p>
-Over the past several weeks, we have created an initial minimum viable product that implements at a very basic
+Over the past several weeks, we have created an initial minimum viable product that implements at a basic
 level the major features that we previously identified as being goals for our project.
 <br><br>
 Throughout this time, as we continued to discuss what our overall aim for our project is, we settled on the phrase "Terminal on Training Wheels"
 as being both a fun and fitting description of what we're working to develop. 
-We want to create a product that makes life easier for a user at any level, but the tools we're implementing could be especially
+We want to create a product that makes life easier for a user at any level, of course. But the tools we're implementing could be especially
 helpful in allowing newer users to focus on their work as programmers as opposed to the complexities and inconveniences of the terminal with which they're programming.
 We decided to have our terminal interface be browser-based, allowing us great customizability as well as providing ease of use.
-We also decided to embody the phrase "Terminal on Training Wheels" as part of our branding, creating our logo with this idea in mind.
+We also decided to embody the phrase "Terminal on Training Wheels" as part of our branding, designing our logo with this idea in mind.
 <br><br>
 Following are visual previews of the major features we have chosen to implement as displayed in the browser.
- <br>
-  Feature 1: Pop-up Man Pages
+ <br><br>
+ <b>Feature 1: Pop-up Man Pages</b>
   </p>
   <video width="400" height="225" controls>
   <source src="./images/manpagevid.mp4" type="video/mp4">
@@ -28,5 +28,18 @@ Your browser does not support the video tag.
   User can highlight and right click on a command - one that they have previously entered or one that they are currently inputting -
   and be given the option to view the man page for that command. A link to that man page will be opened in a pop-up window allowing the user 
   to easily reference helpful information without interrupting their workflow. 
-  </p>
+ <br><br>
+   <b>Feature 2: Display image preview using ls command</b>
+   When a user runs the ls command, if there are any images in the given directory, a preview of that image will actually be displayed 
+   to the user rather than just its title. This provides the user with an improved visual experience, allowing them to actually see and thus more quickly
+   identify the content they are looking for. 
+   
+   <br><br>
+   <b>Feature 3: Insert breakpoints into pipelines</b>
+   When a user is inputting a command with pipes, they can choose to add a breakpoint at a given pipe in the line, and be given back the output
+   up until that point. We have not yet fully developed this feature in terms of backend functionality. However, it is currently possible 
+   for the user to highlight the command up to and including the pipe at which they'd like to add a breakpoint, and right click to be given
+   the option to do so. This will insert a red circle in place of the pipe to demonstrate the breakpoint location. 
+ </p>
+ 
 </body>

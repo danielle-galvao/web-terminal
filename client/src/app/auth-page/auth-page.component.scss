@@ -8,7 +8,7 @@
 .form {
   position: relative;
   z-index: 1;
-  background: #FFFFFF;
+  background: #BBBBBB;
   max-width: 360px;
   margin: 0 auto 100px;
   padding: 45px;
@@ -59,10 +59,11 @@
 }
 .form .formtitle {
 font-family:"Architects Daughter", sans-serif;
-font-size:2.8em;
+font-size:2.4em;
 font-weight:normal;
 color: #2e7bcf;
 letter-spacing:-1px;
+margin-bottom: 40px
 }
 
 .container {

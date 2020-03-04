@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
-
+@import url(https://fonts.googleapis.com/css?family=Quicksand:400);
 .auth-page {
   width: 360px;
   padding: 8% 0 0;
@@ -46,7 +46,7 @@
 .form .message {
   font-family: "Roboto", sans-serif;
   margin: 15px 0 0;
-  color: #b3b3b3;
+  color: #2e70c4;
   font-size: 12px;
 }
 .form .message a {
@@ -58,12 +58,12 @@
   display: none;
 }
 .form .formtitle {
-font-family:"Architects Daughter", sans-serif;
+font-family:"Quicksand", sans-serif;
 font-size:2.4em;
 font-weight:normal;
 color: #2e7bcf;
 letter-spacing:-1px;
-margin-bottom: 40px
+margin-bottom: 30px
 }
 
 .container {

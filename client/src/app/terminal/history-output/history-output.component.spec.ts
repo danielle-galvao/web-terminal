@@ -16,6 +16,7 @@ describe('HistoryOutputComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HistoryOutputComponent);
     component = fixture.componentInstance;
+    component.output = "";
     fixture.detectChanges();
   });
 

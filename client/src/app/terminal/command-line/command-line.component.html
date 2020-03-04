@@ -1,4 +1,3 @@
-<form (submit)="sendCommand()">
-    <span class="terminal-text">$ </span><input id="commandId" #input type="text">
-    <button type="submit"></button>
-</form>
+<div>
+    <span class="terminal-text">$ </span><span id="command-line-input" #input contenteditable="true"></span>
+</div>

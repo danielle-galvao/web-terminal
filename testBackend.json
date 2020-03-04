@@ -1,7 +1,0 @@
-{
-	"COMMAND": [
-		"ls ./",
-		"grep *.png"
-	],
-	"MODS": []
-}

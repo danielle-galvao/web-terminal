@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { BackendService } from 'src/app/backend.service';
 
 @Component({
@@ -6,18 +6,25 @@ import { BackendService } from 'src/app/backend.service';
   templateUrl: './command-line.component.html',
   styleUrls: ['./command-line.component.scss']
 })
-export class CommandLineComponent implements OnInit {
+export class CommandLineComponent implements AfterViewInit {
 
-  @ViewChild('input') command;
+  @ViewChild('input') command: ElementRef<HTMLSpanElement>;
 
   constructor(private backend: BackendService) { }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    this.command.nativeElement.addEventListener('keydown', (e) => {
+      if(e.keyCode == 13 && !e.shiftKey) {
+        e.preventDefault();
+        this.sendCommand();
+      }
+    });
+    this.command.nativeElement.addEventListener('contextmenu', (e) => e.preventDefault());
   }
 
   sendCommand() {
-    this.backend.sendCommand(this.command.nativeElement.value);
-    this.command.nativeElement.value = "";
+    this.backend.sendCommand(this.command.nativeElement.innerText);
+    this.command.nativeElement.innerText = '';
     // TODO handle observable
     return false;
   }

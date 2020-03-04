@@ -1,7 +1,9 @@
-<web-terminal-history-command [command]="command.command"></web-terminal-history-command>
-<div class = "button-container">
-	<button class="button1" (click)="toggleOutput()">stdout</button>
-	<button class="button1">stdin</button>
-	<button class="button3">stderr</button>
+<div *ngIf="(command$ | async) as command">
+    <web-terminal-history-command [command]="command.command"></web-terminal-history-command>
+    <div class = "button-container">
+        <button class="button1" (click)="toggleOutput()">stdout</button>
+        <button class="button1">stdin</button>
+        <button class="button3">stderr</button>
+    </div>
+    <web-terminal-history-output *ngIf="show" [output]="command.output"></web-terminal-history-output>
 </div>
-<web-terminal-history-output *ngIf="show" [output]="command.output"></web-terminal-history-output>

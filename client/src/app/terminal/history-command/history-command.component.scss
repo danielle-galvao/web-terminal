@@ -2,4 +2,21 @@
 	font-family:"Courier New", Courier, monospace;
 }
 
+.copy-button{
 
+margin-left:20px;
+  background-color: #eeeeee;
+  color: black;
+  padding: 5px ;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+  font-family: "Roboto", sans-serif;
+	border: 1px solid black;
+}
+
+.copy-button:hover {
+  background-color: #dddddd;
+  color: black;
+}

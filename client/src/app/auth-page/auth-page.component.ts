@@ -30,7 +30,7 @@ export class AuthPageComponent implements OnInit {
     //TODO need to clean up subscription?
     this.backend.authenticate(this.token.nativeElement.value).subscribe((didSucceed) => {
       if(didSucceed) {
-        this.router.navigateByUrl('terminal').then(console.log);
+        this.router.navigateByUrl('terminal');
       } else {
         this.error.nativeElement.innerHTML = 'Failed to authenticate';
       }

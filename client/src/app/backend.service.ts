@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, OperatorFunction, throwError } from 'rxjs';
-import { map, filter, shareReplay, scan, takeWhile, timeoutWith } from 'rxjs/operators';
+import { map, filter, shareReplay, scan, takeWhile, timeoutWith, take } from 'rxjs/operators';
 import { webSocket } from 'rxjs/webSocket';
 
 const ofType = (type: string | string[]) => (Array.isArray(type)) ? filter((message) => type.indexOf(message["type"]) >= 0) : filter((message) => message["type"] == type);
@@ -34,13 +34,15 @@ export class BackendService {
   constructor() {
     this.websocket = webSocket("ws://localhost:6969");
     this.websocket.subscribe(() => {}, (err) => console.error('Socket got error ', err), () => console.log('Socket completed')); //TODO better error
-    
+
     this.authenticated$ = this.websocket.pipe(
       ofType("authentication"),
       mapToPayload,
       isOk,
-      shareReplay(1)
+      shareReplay(1),
     );
+    // TODO dummy subscription actually needed? Possible to rewrite this nicer?
+    this.authenticated$.subscribe(() => {});
 
     // TODO init here or upon construction?
     this.history$ = this.websocket.pipe(
@@ -54,15 +56,13 @@ export class BackendService {
         return history;
       }, []),
       shareReplay(1));
-      this.history$.subscribe(console.log);
+      this.history$.subscribe(() => {});
    }
 
   /**
    * Returns an observable which indicates whether a message of successful authentication has been recieved
    */
   isAuthenticated() {
-    // TODO
-    console.log('Check that user has already successfully authenticated');
     return this.authenticated$;
   }
 
@@ -78,7 +78,9 @@ export class BackendService {
       mapToPayload,
       throwErrorMessage,
       isOk,
-      timeoutWith(1000, throwError({ message: "Timed out"}))
+      timeoutWith(1000, throwError({ message: "Timed out"})),
+      take(1),
+      shareReplay(1)
       // TODO link this timeout with the one in the router guard so they trigger at same time?
     );
     this.websocket.next({type: "authentication", payload: {token}});

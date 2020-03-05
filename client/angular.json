@@ -23,6 +23,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
+            "baseHref":"/terminal/",
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -34,7 +35,6 @@
           },
           "configurations": {
             "production": {
-              "baseHref":"/terminal",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

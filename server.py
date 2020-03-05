@@ -14,13 +14,17 @@ def angular_folders(path):
     except:
         return redirect('/', code=301)
 
-@app.route('/terminal')
+@app.route('/terminal/')
 def terminal_root():
         return send_from_directory('./client/dist/web-terminal/', 'index.html')
 
+@app.route('/<path:path>')
+def catch_rest(path):
+    return redirect('/terminal/', code=301)
+
 @app.route('/')
 def root():
-    return redirect('/terminal', code=301)
+    return redirect('/terminal/', code=301)
 
 def run_flask():
     print('Starting web server...')

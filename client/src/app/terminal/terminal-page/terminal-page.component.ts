@@ -59,7 +59,7 @@ export class TerminalPageComponent implements OnInit {
       this.contextmenuY=event.clientY;
       this.contextmenuPipe=true;
       this.contextmenuCommand=splitCommand
-      var fullCommand = (<HTMLInputElement>document.getElementById("commandId")).value;
+      var fullCommand = (<HTMLInputElement>document.getElementById("command-line-input")).innerText;
       var firstHalf = window.getSelection().toString().length;
       var secondHalf = fullCommand.slice(firstHalf).trim();
       this.endCommand=secondHalf;
@@ -74,7 +74,7 @@ export class TerminalPageComponent implements OnInit {
   }
 
   addBreakpoint(){
-    (<HTMLInputElement>document.getElementById("commandId")).value = this.contextmenuCommand + '⭕ ' + this.endCommand;
+    (<HTMLInputElement>document.getElementById("command-line-input")).innerText = this.contextmenuCommand + '⭕ ' + this.endCommand;
   }
 
 	//disables the menu

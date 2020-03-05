@@ -1,20 +1,24 @@
 .command-output{
-	font-family: "Courier New", Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
+  color:#eeeeee;
 }
 
 .button1{
   background-color: #e7e7e7;
   border: none;
   color: black;
-  padding: 10px 12px;
+  padding: 8px 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 14px;
+  font-size: 0.8em;
+  width:8%;
   font-family: "Roboto", sans-serif;
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
-	border-left: 1px solid black;
+  border-left: 1px solid black;
+  border-radius: 2px;
+  min-width: 70px;
 }
 
 .button1:hover {
@@ -31,16 +35,19 @@
   background-color: #e7e7e7;
   border: none;
   color: black;
-  padding: 10px 12px;
+  padding: 8px 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 14px;
+  font-size: 0.8em;
+  width:8%;
   font-family: "Roboto", sans-serif;
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
 	border-left: 1px solid black;
-	border-right: 1px solid black;
+  border-right: 1px solid black;
+  border-radius: 2px;
+  min-width: 70px;
 }
 
 .button3:hover {

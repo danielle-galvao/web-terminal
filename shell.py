@@ -110,7 +110,7 @@ async def write_to_shell(STDIN):
 
 print('Starting shell process...')
 shell_process = subprocess.Popen(
-        ['/bin/bash'], 
+        ['bash'], 
         stdin  = subprocess.PIPE,
         stdout = subprocess.PIPE
 )

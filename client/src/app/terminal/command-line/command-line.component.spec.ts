@@ -8,7 +8,7 @@ describe('CommandLineComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CommandLineComponent ]
+      declarations: [ CommandLineComponent ],
     })
     .compileComponents();
   }));

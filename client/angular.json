@@ -39,7 +39,7 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
-                },
+                }
               ],
               "optimization": true,
               "outputHashing": "all",
@@ -96,6 +96,16 @@
               "src/styles.scss"
             ],
             "scripts": []
+          },
+          "configurations": {
+            "mockWebsocket": {
+              "fileReplacements": [
+                {
+                  "replace": "src/app/websocket-provider.ts",
+                  "with": "src/app/websocket-provider.mock.ts"
+                }
+              ]
+            }
           }
         },
         "lint": {

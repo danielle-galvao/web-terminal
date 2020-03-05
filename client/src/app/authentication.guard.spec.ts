@@ -10,7 +10,7 @@ describe('AuthenticationGuard', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
-      ],
+      ]
     });
     guard = TestBed.inject(AuthenticationGuard);
   });

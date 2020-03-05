@@ -35,6 +35,6 @@ jobs:
 
       - name: Unit Test
         working-directory: ./client
-        run: npm run test -- --watch=false --browsers=ChromeHeadlessCustom
+        run: npm run test -- --watch=false --browsers=ChromeHeadlessCustom --configuration=mockWebsocket
 
 # TODO e2e

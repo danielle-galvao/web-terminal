@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, OperatorFunction, throwError } from 'rxjs';
+import { Observable, OperatorFunction, throwError, Subject } from 'rxjs';
 import { map, filter, shareReplay, scan, takeWhile, timeoutWith, take } from 'rxjs/operators';
 import { webSocket } from 'rxjs/webSocket';
+import { WebSocketProvider } from './websocket-provider';
 
 const ofType = (type: string | string[]) => (Array.isArray(type)) ? filter((message) => type.indexOf(message["type"]) >= 0) : filter((message) => message["type"] == type);
 
@@ -31,8 +32,8 @@ export class BackendService {
   history$;
   authenticated$: Observable<boolean>;
 
-  constructor() {
-    this.websocket = webSocket("ws://localhost:6969");
+  constructor(websocketProvider: WebSocketProvider) {
+    this.websocket = websocketProvider.provide();
     this.websocket.subscribe(() => {}, (err) => console.error('Socket got error ', err), () => console.log('Socket completed')); //TODO better error
 
     this.authenticated$ = this.websocket.pipe(

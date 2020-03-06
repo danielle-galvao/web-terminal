@@ -35,13 +35,13 @@
       </div>
     </header>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
+    <div id="content-wrapper style="background-color:#cccccc; overflow: auto;">
+      <div class="inner clearfix style="background-color:#cccccc; overflow: auto;">
         <section id="main-content">
           {{ content }}
         </section>
 
-        <aside id="sidebar">
+        <aside id="sidebar" style="background-color:#cccccc; overflow: auto;">
           {% if site.show_downloads %}
             <a href="{{ site.github.zip_url }}" class="button">
               <small>Download</small>

@@ -62,7 +62,7 @@ async def run_command(websocket, message_json):
     STDOUT_JSON['payload']['clientId'] = message_json['payload']['clientId']
 
     await write_message(websocket, json.dumps(STDOUT_JSON))
-    await write_to_shell(cmd, websocket)
+    await write_to_shell(cmd, websocket, message_json['payload']['clientId'])
 
 def enqueue_output(stream, queue):
     ''' Read from stream and put line in queue '''
@@ -70,7 +70,7 @@ def enqueue_output(stream, queue):
         queue.put(line)
     stream.close()
 
-async def write_to_shell(STDIN, websocket):
+async def write_to_shell(STDIN, websocket, client_id):
     global shell_process
     global shell_stdout_queue
     global shell_stderr_queue
@@ -93,12 +93,12 @@ async def write_to_shell(STDIN, websocket):
             STDOUT_JSON = '{"type": "update", "payload": {"output": {}}}'
             STDOUT_JSON = json.loads(STDOUT_JSON)
 
-            if 'ls' == cmd:
+            if 'ls' == STDIN.split()[0]:
                 STDOUT = ls_to_html(STDOUT)
 
             STDOUT_JSON["payload"]["output"]["combined"] = STDOUT
             STDOUT_JSON["payload"]["output"]["stdout"] = STDOUT
-            STDOUT_JSON['payload']['clientId'] = message_json['payload']['clientId']
+            STDOUT_JSON['payload']['clientId'] = client_id
 
             await write_message(websocket, json.dumps(STDOUT_JSON))
 

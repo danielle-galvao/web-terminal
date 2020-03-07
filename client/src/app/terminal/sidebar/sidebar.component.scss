@@ -5,13 +5,27 @@
 	z-index: 2;
 	top: 0;
 	right: 0;
-	background-color: #EEEEEE;
+	background-color: #343434;
 	overflow-x: hidden;
-	padding-top: 60px;
+	box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.sidebartitle {
+	z-index: 2;
+	font-family:"Quicksand", sans-serif;
+	font-size:1.8em;
+	font-weight:normal;
+	color: #2e7bcf;
+	letter-spacing:-1px;
+	margin-left: 20px;
+}
+
+.logoImg {
+	padding-right: 5px;
 }
 
 .sidebar a:hover{
-	color: #f1f1f1;
+	color: #DFE2E7;
 }
 
 
@@ -22,8 +36,8 @@
 	z-index: 1;
 	font-size: 20px;
 	cursor: pointer;
-	background-color: #777;
-	color: white;
+	background-color: #4d4d4d;
+	color: #2e7bcf;
 	padding: 10px 15px;
 	border: none;
 }
@@ -40,8 +54,8 @@
 	display: none;
 	font-size: 20px;
 	margin-right: 250px;
-	background-color: #777;
-	color: white;
+	background-color: #4d4d4d;
+	color: #2e7bcf;
 	padding: 10px 15px;
 	border: none;
 	cursor: pointer;
@@ -53,8 +67,8 @@
 
 
 .collapsible {
-	background-color: #777;
-	color: white;
+	background-color: #8D949A;
+	color: #DFE2E7;
 	cursor: pointer;
 	padding: 18px;
 	width: 100%;
@@ -65,7 +79,7 @@
 }
 
 .active, .collapsible:hover {
-	background-color: #555;
+	background-color: #4d4d4d;
 }
 
 .collapsible:after {
@@ -85,7 +99,7 @@
 	max-height: 0;
 	overflow: hidden;
 	transition: max-height 0.2s ease-out;
-	background-color: #f1f1f1;
+	background-color:  #DFE2E7;
 	font-family: "Roboto", sans-serif;
 	font-size: 14px;
 }

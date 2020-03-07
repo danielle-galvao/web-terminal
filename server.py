@@ -1,4 +1,3 @@
-
 from flask import Flask, send_from_directory, redirect
 
 app = Flask(__name__)

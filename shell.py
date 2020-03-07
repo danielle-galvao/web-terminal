@@ -1,4 +1,3 @@
-
 import queue, subprocess, sys, threading
 import asyncio, websockets
 import json
@@ -27,7 +26,6 @@ async def recv_connection(websocket, path):
         authenticated.remove(websocket)
     except:
         pass
-    
 
 async def recv_message(websocket, message):
     print(f'< {message}')
@@ -52,6 +50,10 @@ async def recv_message(websocket, message):
         else:
             await run_command(websocket, message_json)
 
+async def write_message(websocket, message):
+    print(f'> {message}')
+    await websocket.send(message)
+
 async def run_command(websocket, message_json):
     cmd = message_json['payload']['command']
     STDOUT_JSON = '{"type": "command", "payload": { "result": "ok", "serverId": -1 }}'
@@ -59,23 +61,8 @@ async def run_command(websocket, message_json):
     STDOUT_JSON['payload']['command'] = message_json['payload']['command']
     STDOUT_JSON['payload']['clientId'] = message_json['payload']['clientId']
 
-    await websocket.send(json.dumps(STDOUT_JSON))
-
-    STDOUT = await write_to_shell(cmd)
-    
-    STDOUT_JSON = '{"type": "update", "payload": {"output": {}}}'
-    STDOUT_JSON = json.loads(STDOUT_JSON)
-
-    if 'ls' == cmd:
-        STDOUT = ls_to_html(STDOUT)
-
-    STDOUT_JSON["payload"]["output"]["combined"] = STDOUT
-    STDOUT_JSON["payload"]["output"]["stdout"] = STDOUT
-    STDOUT_JSON['payload']['clientId'] = message_json['payload']['clientId']
-
-    print(f'> {json.dumps(STDOUT_JSON)}')
-
-    await websocket.send(json.dumps(STDOUT_JSON))
+    await write_message(websocket, json.dumps(STDOUT_JSON))
+    await write_to_shell(cmd, websocket)
 
 def enqueue_output(stream, queue):
     ''' Read from stream and put line in queue '''
@@ -83,42 +70,61 @@ def enqueue_output(stream, queue):
         queue.put(line)
     stream.close()
 
-async def write_to_shell(STDIN):
+async def write_to_shell(STDIN, websocket):
     global shell_process
-    global shell_output_queue
+    global shell_stdout_queue
+    global shell_stderr_queue
 
-    print(shell_process)
-    print(shell_output_queue)
     print(f'Sending STDIN:"{STDIN}" to shell proc...')
+
     shell_process.stdin.write(STDIN.encode())
     shell_process.stdin.write(b'\n')
     shell_process.stdin.flush()
 
-    STDOUT = ''
     # Read output
-    block = True 
+    block = True
     while True:
         try:
-            line = shell_output_queue.get(block, timeout=1)
+            new_stdout = shell_stdout_queue.get(block, timeout=1)
         except queue.Empty:
             break
         else:
-            STDOUT += line.decode()
-        block = False
+            STDOUT = new_stdout.decode()
+            STDOUT_JSON = '{"type": "update", "payload": {"output": {}}}'
+            STDOUT_JSON = json.loads(STDOUT_JSON)
 
-    return STDOUT
+            if 'ls' == cmd:
+                STDOUT = ls_to_html(STDOUT)
+
+            STDOUT_JSON["payload"]["output"]["combined"] = STDOUT
+            STDOUT_JSON["payload"]["output"]["stdout"] = STDOUT
+            STDOUT_JSON['payload']['clientId'] = message_json['payload']['clientId']
+
+            await write_message(websocket, json.dumps(STDOUT_JSON))
+
+        block = False
 
 print('Starting shell process...')
 shell_process = subprocess.Popen(
-        ['bash'], 
+        ['bash'],
         stdin  = subprocess.PIPE,
+        stderr = subprocess.PIPE,
         stdout = subprocess.PIPE
 )
 
-shell_output_queue  = queue.Queue()
-shell_output_thread = threading.Thread(
-        target = enqueue_output, 
-        args   = (shell_process.stdout, shell_output_queue),
+shell_stdout_queue  = queue.Queue()
+shell_stdout_thread = threading.Thread(
+        target = enqueue_output,
+        args   = (shell_process.stdout, shell_stdout_queue),
         daemon = True
 )
-shell_output_thread.start()
+
+# shell_stderr_queue  = queue.Queue()
+# shell_stderr_thread = threading.Thread(
+#         target = enqueue_output,
+#         args   = (shell_process.stderr, shell_stderr_queue),
+#         daemon = True
+# )
+
+shell_stdout_thread.start()
+# shell_stderr_thread.start()

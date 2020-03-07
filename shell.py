@@ -2,19 +2,7 @@ import queue, subprocess, sys, threading
 import asyncio, websockets
 import json
 
-def ls_to_html(STDOUT):
-    toParse = STDOUT.splitlines()
-    endParse = []
-
-    for f in toParse:
-        if '.' in f:
-            fType = f.split('.')[-1]
-            if fType in ['jpg', 'png', 'jpeg']:
-                endParse.append(f'<img src="/file/{f}">')
-                continue
-        endParse.append(f'<a href="/file/{f}">{f}</a>')
-
-    return '\n'.join(endParse)
+import sugar
 
 token = "token" if len(sys.argv) <= 1 else sys.argv[1]
 authenticated = set()
@@ -61,8 +49,13 @@ async def run_command(websocket, message_json):
     STDOUT_JSON['payload']['command'] = message_json['payload']['command']
     STDOUT_JSON['payload']['clientId'] = message_json['payload']['clientId']
 
+
     await write_message(websocket, json.dumps(STDOUT_JSON))
-    await write_to_shell(cmd, websocket, message_json['payload']['clientId'])
+
+    if cmd.split()[0] in sugar.sugar:
+        await write_message(websocket, sugar.handle_command(STDOUT_JSON))
+    else:
+        await write_to_shell(cmd, websocket, message_json['payload']['clientId'])
 
 def enqueue_output(stream, queue):
     ''' Read from stream and put line in queue '''
@@ -94,7 +87,7 @@ async def write_to_shell(STDIN, websocket, client_id):
             STDOUT_JSON = json.loads(STDOUT_JSON)
 
             if 'ls' == STDIN.split()[0]:
-                STDOUT = ls_to_html(STDOUT)
+                STDOUT = sugar.ls_to_html(STDOUT)
 
             STDOUT_JSON["payload"]["output"]["combined"] = STDOUT
             STDOUT_JSON["payload"]["output"]["stdout"] = STDOUT

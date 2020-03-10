@@ -2,24 +2,27 @@ import queue, subprocess, sys, threading, os
 import asyncio, websockets
 import json
 
+from server import token
+
 import sugar
 
-token = "token" if len(sys.argv) <= 1 else sys.argv[1]
+# token = "token" if len(sys.argv) <= 1 else sys.argv[1]
 authenticated = set()
 
-async def recv_connection(websocket, path):
+async def recv_connection(websocket, path, token):
     async for message in websocket:
-        await recv_message(websocket, message)
+        await recv_message(websocket, message, token)
     try:
         authenticated.remove(websocket)
     except:
         pass
 
-async def recv_message(websocket, message):
+async def recv_message(websocket, message, token):
     print(f'< {message}')
     message_json = json.loads(message)
 
     if message_json["type"] == "authentication":
+        print(token)
         out = None
         if message_json['payload']['token'] == token:
             authenticated.add(websocket)

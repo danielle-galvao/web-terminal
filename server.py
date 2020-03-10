@@ -1,6 +1,9 @@
 from flask import Flask, send_from_directory, redirect
+from random import choice
+from string import ascii_uppercase
 
 app = Flask(__name__)
+token = ''
 
 @app.route('/file/<path:path>', methods=['GET'])
 def local_files(path):
@@ -26,5 +29,9 @@ def root():
     return redirect('/terminal/', code=301)
 
 def run_flask():
-    print('Starting web server...')
+    global token
+
+    token = ''.join(choice(ascii_uppercase) for i in range(5))
+    print(f'Starting web server, your token is: {token}')
+
     app.run()

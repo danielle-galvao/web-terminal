@@ -70,20 +70,22 @@ async def write_to_shell(STDIN, websocket, client_id):
 
     print(f'Sending STDIN:"{STDIN}" to shell proc...')
 
-    os.environ['CURR_RUN'] = '1'
-    print(os.environ['CURR_RUN'])
-
-    shell_process.stdin.write(STDIN.encode() + b'; echo "OHGODYES"')
+    shell_process.stdin.write(STDIN.encode() + b'; echo "$?:OHGODYES"')
     shell_process.stdin.write(b'\n')
     shell_process.stdin.flush()
 
     # Read output
-    new_stdout = b''
     block = True
     while True:
         try:
             new_stdout = shell_stdout_queue.get(block, timeout=1)
-            if new_stdout.decode() == 'OHGODYES\n':
+            if 'OHGODYES\n' in new_stdout.decode():
+                STDOUT = new_stdout.decode().split(':')[0]
+                STDOUT_JSON = '{"type": "done", "payload": {"output": {}}}'
+                STDOUT_JSON = json.loads(STDOUT_JSON)
+                STDOUT_JSON["payload"]["exit_code"] = STDOUT
+                STDOUT_JSON['payload']['clientId'] = client_id
+                await write_message(websocket, json.dumps(STDOUT_JSON))
                 break
         except queue.Empty:
             pass
@@ -103,10 +105,8 @@ async def write_to_shell(STDIN, websocket, client_id):
             await write_message(websocket, json.dumps(STDOUT_JSON))
 
         block = False
-    print(os.environ['CURR_RUN'])
 
 print('Starting shell process...')
-os.environ['CURR_RUN'] = '0'
 shell_process = subprocess.Popen(
     ['bash'],
     shell=True,

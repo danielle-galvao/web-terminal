@@ -1,4 +1,4 @@
-import queue, subprocess, sys, threading
+import queue, subprocess, sys, threading, os
 import asyncio, websockets
 import json
 
@@ -70,17 +70,23 @@ async def write_to_shell(STDIN, websocket, client_id):
 
     print(f'Sending STDIN:"{STDIN}" to shell proc...')
 
-    shell_process.stdin.write(STDIN.encode())
+    os.environ['CURR_RUN'] = '1'
+    print(os.environ['CURR_RUN'])
+
+    shell_process.stdin.write(STDIN.encode() + b'; echo "OHGODYES"')
     shell_process.stdin.write(b'\n')
     shell_process.stdin.flush()
 
     # Read output
+    new_stdout = b''
     block = True
     while True:
         try:
             new_stdout = shell_stdout_queue.get(block, timeout=1)
+            if new_stdout.decode() == 'OHGODYES\n':
+                break
         except queue.Empty:
-            break
+            pass
         else:
             STDOUT = new_stdout.decode()
             STDOUT_JSON = '{"type": "update", "payload": {"output": {}}}'
@@ -88,6 +94,7 @@ async def write_to_shell(STDIN, websocket, client_id):
 
             if 'ls' == STDIN.split()[0]:
                 STDOUT = sugar.ls_to_html(STDOUT)
+            STDOUT.replace('\n', '<br>')
 
             STDOUT_JSON["payload"]["output"]["combined"] = STDOUT
             STDOUT_JSON["payload"]["output"]["stdout"] = STDOUT
@@ -96,13 +103,17 @@ async def write_to_shell(STDIN, websocket, client_id):
             await write_message(websocket, json.dumps(STDOUT_JSON))
 
         block = False
+    print(os.environ['CURR_RUN'])
 
 print('Starting shell process...')
+os.environ['CURR_RUN'] = '0'
 shell_process = subprocess.Popen(
-        ['bash'],
-        stdin  = subprocess.PIPE,
-        stderr = subprocess.PIPE,
-        stdout = subprocess.PIPE
+    ['bash'],
+    shell=True,
+    stdin  = subprocess.PIPE,
+    stderr = subprocess.PIPE,
+    stdout = subprocess.PIPE,
+    env = os.environ
 )
 
 shell_stdout_queue  = queue.Queue()

@@ -81,7 +81,22 @@ async def write_to_shell(STDIN, websocket, client_id):
     block = True
     while True:
         try:
+            new_stderr = shell_stderr_queue.get(block, timeout=1)
+        except queue.Empty:
+            pass
+        else:
+            STDERR = new_stderr.decode()
+            STDERR_JSON = '{"type": "update", "payload": {"output": {}}}'
+            STDERR_JSON = json.loads(STDERR_JSON)
+            STDERR = STDERR.replace('\n', '<br>')
+            STDERR_JSON["payload"]["output"]["stderr"] = STDERR
+            STDERR_JSON['payload']['clientId'] = client_id
+
+            await write_message(websocket, json.dumps(STDERR_JSON))
+
+        try:
             new_stdout = shell_stdout_queue.get(block, timeout=1)
+
             if 'OHGODYES\n' in new_stdout.decode():
                 STDOUT = new_stdout.decode().split(':')[0]
                 STDOUT_JSON = '{"type": "done", "payload": {"output": {}}}'
@@ -101,7 +116,7 @@ async def write_to_shell(STDIN, websocket, client_id):
                 STDOUT = sugar.ls_to_html(STDOUT)
             STDOUT = STDOUT.replace('\n', '<br>')
 
-            STDOUT_JSON["payload"]["output"]["combined"] = STDOUT
+            # STDOUT_JSON["payload"]["output"]["combined"] = STDOUT
             STDOUT_JSON["payload"]["output"]["stdout"] = STDOUT
             STDOUT_JSON['payload']['clientId'] = client_id
 
@@ -126,12 +141,12 @@ shell_stdout_thread = threading.Thread(
         daemon = True
 )
 
-# shell_stderr_queue  = queue.Queue()
-# shell_stderr_thread = threading.Thread(
-#         target = enqueue_output,
-#         args   = (shell_process.stderr, shell_stderr_queue),
-#         daemon = True
-# )
+shell_stderr_queue  = queue.Queue()
+shell_stderr_thread = threading.Thread(
+        target = enqueue_output,
+        args   = (shell_process.stderr, shell_stderr_queue),
+        daemon = True
+)
 
 shell_stdout_thread.start()
-# shell_stderr_thread.start()
+shell_stderr_thread.start()

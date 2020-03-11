@@ -99,7 +99,7 @@ async def write_to_shell(STDIN, websocket, client_id):
 
             if 'ls' == STDIN.split()[0]:
                 STDOUT = sugar.ls_to_html(STDOUT)
-            STDOUT.replace('\n', '<br>')
+            STDOUT = STDOUT.replace('\n', '<br>')
 
             STDOUT_JSON["payload"]["output"]["combined"] = STDOUT
             STDOUT_JSON["payload"]["output"]["stdout"] = STDOUT

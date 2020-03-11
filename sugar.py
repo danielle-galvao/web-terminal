@@ -10,7 +10,7 @@ def ls_to_html(STDOUT):
         if '.' in f:
             fType = f.split('.')[-1]
             if fType in ['jpg', 'png', 'jpeg']:
-                endParse.append(f'<img src="/file/{f}">')
+                endParse.append(f'<img src="/file/{f}">\n')
                 continue
         endParse.append(f'<a href="/file/{f}">{f}</a>\n')
 

@@ -4,10 +4,15 @@ button {
 
 #command-line-input {
 	font-family: "Courier New", Courier, monospace;
-  width: 98%;
+  display: inline-block;
+  min-width: 95%;
   padding: 2px;
   box-sizing: border-box;
   color:#eeeeee;
+}
+
+#command-line-input:focus{
+  outline: none !important
 }
 
 .terminal-text{

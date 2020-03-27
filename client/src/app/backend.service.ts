@@ -55,6 +55,8 @@ export class BackendService {
           history[message.payload.clientId] = {...history[message.payload.clientId], ...message.payload};
         } else if(message.type == "update") {
           history[message.payload.clientId].output = (history[message.payload.clientId]?.output || '') + message.payload.output.stdout;
+          mergeBreakpoints(history[message.payload.clientId].output, message.payload.output);
+          //TODO clean up breakpoints
         }
         return history;
       }, []),
@@ -133,4 +135,11 @@ export class BackendService {
     return command$;
   }
 
+}
+
+function mergeBreakpoints(history: { breakpoints: any[] }, update: { breakpoints: any[] }) {
+  for(let i = 0; i < update.breakpoints.length; i++) {
+    history.breakpoints[i].stdout = (history.breakpoints[i].stdout || '') + update.breakpoints[i].stdout;
+    history.breakpoints[i].stderr = (history.breakpoints[i].stderr || '') + update.breakpoints[i].sterr;
+  }
 }

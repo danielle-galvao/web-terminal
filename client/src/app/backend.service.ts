@@ -25,6 +25,8 @@ const isOk: OperatorFunction<any, boolean> = map(message => message["result"] ==
 })
 export class BackendService {
 
+  public static readonly BREAKPOINT_CHAR = '⭕';
+
   private websocket;
 
   private clientId = 0;
@@ -108,7 +110,13 @@ export class BackendService {
    * @param command the command to send to the backend
    * @returns whether the command was accepted
    */
-  sendCommand(command: any): Observable<boolean>  {
+  sendCommand(command: string): Observable<boolean>  {
+    const breakpoints = [];
+    let i: number;
+    const pipes = command.replace(new RegExp('[^\\|' + BackendService.BREAKPOINT_CHAR + ']', 'g'), '');
+    while((i = pipes.indexOf(BackendService.BREAKPOINT_CHAR, i + 1)) >= 0) breakpoints.push(i);
+    command = command.replace(BackendService.BREAKPOINT_CHAR, '|');
+
     console.log('Submitting command ' + command + ' to backend');
     const command$ = this.websocket.pipe(
       ofType("command"),
@@ -118,7 +126,8 @@ export class BackendService {
 
     this.websocket.next({type: "command", payload: {
       command,
-      clientId: this.clientId ++
+      clientId: this.clientId ++,
+      breakpoints
     }});
 
     return command$;

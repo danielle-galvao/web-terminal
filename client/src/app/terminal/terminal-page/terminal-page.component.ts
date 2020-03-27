@@ -81,7 +81,7 @@ export class TerminalPageComponent implements OnInit {
   }
 
   addBreakpoint(){
-    (<HTMLInputElement>document.getElementById("command-line-input")).innerText = this.contextmenuCommand + '⭕ ' + this.endCommand;
+    (<HTMLInputElement>document.getElementById("command-line-input")).innerText = this.contextmenuCommand + BackendService.BREAKPOINT_CHAR + ' ' + this.endCommand;
   }
 
 	/**

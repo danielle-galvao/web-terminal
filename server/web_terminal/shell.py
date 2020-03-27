@@ -45,7 +45,7 @@ async def write_message(websocket, message):
 
 async def run_command(websocket, message_json):
     cmd = message_json['payload']['command']
-    STDOUT_JSON = '{"type": "command", "payload": { "result": "ok", "serverId": -1 }}'
+    STDOUT_JSON = '{"type": "command", "payload": { "result": "ok", "status": "running" }}'
     STDOUT_JSON = json.loads(STDOUT_JSON)
     STDOUT_JSON['payload']['command'] = message_json['payload']['command']
     STDOUT_JSON['payload']['clientId'] = message_json['payload']['clientId']
@@ -84,7 +84,7 @@ async def write_to_shell(STDIN, websocket, client_id):
             pass
         else:
             STDERR = new_stderr.decode()
-            STDERR_JSON = '{"type": "update", "payload": {"output": {}}}'
+            STDERR_JSON = '{"type": "update", "payload": {"output": {}, "status": "running"}}'
             STDERR_JSON = json.loads(STDERR_JSON)
             STDERR = STDERR.replace('\n', '<br>')
             STDERR_JSON["payload"]["output"]["stderr"] = STDERR
@@ -97,7 +97,7 @@ async def write_to_shell(STDIN, websocket, client_id):
 
             if 'OHGODYES\n' in new_stdout.decode():
                 STDOUT = new_stdout.decode().split(':')[0]
-                STDOUT_JSON = '{"type": "done", "payload": {"output": {}}}'
+                STDOUT_JSON = '{"type": "update", "payload": {"status": "completed"}}'
                 STDOUT_JSON = json.loads(STDOUT_JSON)
                 STDOUT_JSON["payload"]["exitCode"] = STDOUT
                 STDOUT_JSON['payload']['clientId'] = client_id
@@ -107,7 +107,7 @@ async def write_to_shell(STDIN, websocket, client_id):
             pass
         else:
             STDOUT = new_stdout.decode()
-            STDOUT_JSON = '{"type": "update", "payload": {"output": {}}}'
+            STDOUT_JSON = '{"type": "update", "payload": {"output": {}, "status": "running"}}'
             STDOUT_JSON = json.loads(STDOUT_JSON)
 
             if 'ls' == STDIN.split()[0]:

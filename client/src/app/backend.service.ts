@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, OperatorFunction, throwError, Subject } from 'rxjs';
-import { map, filter, shareReplay, scan, takeWhile, timeoutWith, take } from 'rxjs/operators';
+import { map, filter, shareReplay, scan, takeWhile, timeoutWith, take, tap } from 'rxjs/operators';
 import { webSocket } from 'rxjs/webSocket';
 import { WebSocketProvider } from './websocket-provider';
 
@@ -52,12 +52,21 @@ export class BackendService {
         if(message.type == "command" && message.payload.result == "ok") {
           history[message.payload.clientId] = {...history[message.payload.clientId], ...message.payload};
         } else if(message.type == "update") {
-          history[message.payload.clientId].output = (history[message.payload.clientId]?.output || '') + message.payload.output.stdout;
+          if(message.payload.output?.stdout){
+            if(!history[message.payload.clientId].output) {
+              history[message.payload.clientId].output = {}
+            }
+            //TODO clean up merging
+            history[message.payload.clientId].output.stdout = (history[message.payload.clientId].output.stdout || '') + message.payload.output.stdout;
+            history[message.payload.clientId].output.stderr = (history[message.payload.clientId].output.stderr || '') + message.payload.output.stderr;  
+          }
+          history[message.payload.clientId].status = message.payload.status;
         }
         return history;
       }, []),
       shareReplay(1));
       this.history$.subscribe(() => {});
+      this.history$.subscribe(console.log);
    }
 
   /**
@@ -99,6 +108,7 @@ export class BackendService {
   getHistoryFor(clientId: number) {
     return this.history$.pipe(
       map(commands => commands[clientId]),
+      tap(x =>console.log(x)),
       takeWhile(command => command["status"] == "running", true)
     );
   }
@@ -122,6 +132,17 @@ export class BackendService {
     }});
 
     return command$;
+  }
+
+  signalCommand(clientId: number, signal: number) {
+    console.log('Requesting ' + signal + ' on command ' + clientId);
+
+    //TODO how handle?
+    this.websocket.next({type: "command", payload: {
+      type: signal,
+      clientId,
+      signal
+    }});
   }
 
 }

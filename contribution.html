@@ -19,6 +19,35 @@ layout: default
 
 
 <h2>Identified Issues/Improvements</h2> 
+<button type="button" class="collapsible">User Font Size Preferences</button>
+<div class="content">
+  <p>Create a slider in the User Preferences section in the Sidebar which allows for the user to increase or decrease the font sizes of the page.</p>
+</div>
+<button type="button" class="collapsible">Write Output to File</button>
+<div class="content">
+  <p>Create a button to the side of the stdout, stdin, and stderr output tabs which allows for the user to easily write the text from the open tab to a file. </p>
+</div>
+<button type="button" class="collapsible">Stderr Wiring</button>
+<div class="content">
+  <p>Connect the stderr output to display on the stderr tab. You can use the examples from stdout and stdin for guidance.</p>
+</div>
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
 
 
 <h2>I have an improvement idea, but I don't have much experience...</h2>

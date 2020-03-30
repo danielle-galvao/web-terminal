@@ -25,6 +25,14 @@ We really appreciate your interest in our project! If you're looking to add your
     * Whenever possible, provide specific steps that could be taken to implement these feature enhancements. 
     * Include screenshots or other media examples to demonstrate your idea visually or to demonstrate the aspect of Web-Terminal which your suggestion is related to.
    * If you want to be the one to implement your suggested enhancement, start writing code!
+   
+## Implementing Feature Enhancements: Adding a New Feature or Changing an Existing One
+ * If you have written code to either add a new feature to Web-Terminal or to improve one of its existing features, please open a [new GitHub pull request](https://github.com/danielle-galvao/web-terminal/compare) with your new code.
+   * Note: To implement a feature enhancement, we ask that this enhancement first be suggested as a [GitHub Issue](https://github.com/danielle-galvao/web-terminal/issues/new?assignees=&labels=&template=feature_request.md&title=) for tracking purposes. If the issue does not already exist on our [GitHub Issues page](https://github.com/danielle-galvao/web-terminal/issues), please follow the [above guidelines to suggest a feature enhancement](https://github.com/danielle-galvao/web-terminal/master/CONTRIBUTING.md#suggesting-feature-enhancements:-adding-a-new-feature-or-changing-an-existing-one), before returning to this implementation step. If an issue for this feature enhancement has already been created, you may continue with implementation. 
+ * In the PR description:
+   * Include the relevant issue number for the issue that your changes address.
+   * Adding a new feature: Clearly describe the functionality and behavior of this new feature, providing as much detail and as many examples (images, specific use cases, etc.) as possible. Describe the major steps you took to implement this feature, how it benefits the project, as well as any potential drawbacks its addition could have. 
+   * Improving an existing feature: Clearly describe the functionality and behavior of this improved feature and exactly how it differs from the functionality and behavior of the previously existing behavior. Provide as much detail and as many examples of the improved functionality (images, specific use cases, etc.) as possible. Describe the steps you took to change this feature, how the change improves upon the previous existing feature, as well as any potential drawbacks associated with this change.
  
  ## Have a Question?
  If you have a question about contributing that wasn't answered here, or if you simply have a question about our project/codebase, please [contact us!](https://danielle-galvao.github.io/web-terminal/contact/)

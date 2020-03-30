@@ -21,9 +21,10 @@ We really appreciate your interest in our project! If you're looking to add your
   * If there is no existing issue related to your feature suggestion, [create a new issue](https://github.com/danielle-galvao/web-terminal/issues/new) with the following information included: 
     * Give the issue a clear and descriptive title that identifies your suggestion.
     * If you are looking to add a new feature, provide a detailed description of what functionality and behavior it would have and how its implementation would benefit the project. 
-    * If you are looking to improve a current feature, provide a description of the current functionality of that feature, what aspect of that feature you would like to change and why, and a detailed description of the improved functionality/behavior this feature enhancement would provide.
+    * If you are looking to improve an existing feature, provide a description of the current functionality of that feature, what aspect of that feature you would like to change and why, and a detailed description of the improved functionality/behavior this feature enhancement would provide.
     * Whenever possible, provide specific steps that could be taken to implement these feature enhancements. 
-    * Include screenshots or other media examples to demonstrate your idea visually or to demonstrate the aspect of Web-Terminal which your suggestion is related to. 
+    * Include screenshots or other media examples to demonstrate your idea visually or to demonstrate the aspect of Web-Terminal which your suggestion is related to.
+   * Start writing code!
  
  ## Have a Question?
  If you have a question about contributing that wasn't answered here, or if you simply have a question about our project/codebase, please [contact us!](https://danielle-galvao.github.io/web-terminal/contact/)

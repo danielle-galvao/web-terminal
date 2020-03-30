@@ -5,4 +5,9 @@ permalink: /contact/
 ---
 
 # Contact
-Our Gitter Community is [gitter.im/web-terminal/community](https://gitter.im/web-terminal/community)
+## Gitter
+Join the conversation! Our project members communicate primarily through chat rooms in our [Gitter Community](https://gitter.im/web-terminal/community), which is integrated with our project's [GitHub repository](https://github.com/danielle-galvao/web-terminal).
+
+If you have a specific topic related to our project that you would like to discuss or inquire about, feel free to [create a chat room](https://gitter.im/web-terminal/community#createroom) within our web-terminal community dedicated to that topic.
+
+## Original Contributing Project Members

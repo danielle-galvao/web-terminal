@@ -11,3 +11,4 @@ Join the conversation! Our project members communicate primarily through chat ro
 If you have a specific topic related to our project that you would like to discuss or inquire about, feel free to [create a chat room](https://gitter.im/web-terminal/community#createroom) within our web-terminal community dedicated to that topic.
 
 ## Original Contributing Project Members
+  * [Danielle Galvao](https://github.com/danielle-galvao)

@@ -12,3 +12,7 @@ If you have a specific topic related to our project that you would like to discu
 
 ## Original Contributing Project Members
   * [Danielle Galvao](https://github.com/danielle-galvao)
+  * [Katie Liebscher](https://github.com/katieliebscher)
+  * [John Meyer](https://github.com/johnameyer)  
+  * [Zoe Surma](https://github.com/zsurma)
+  * [William Theisen](https://github.com/wtheisen)

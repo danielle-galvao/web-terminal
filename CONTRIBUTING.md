@@ -11,3 +11,9 @@ We really appreciate your interest in our project! If you're looking to add your
     * Describe the problematic behavior you observed after following the steps and how it differed from the behavior you expected to see.
       * Include screenshots, error messages, etc. that help demonstrate the problem.
 
+## Fixing a Bug
+ * If you have written a patch that fixes a bug, please open a [new GitHub pull request](https://github.com/danielle-galvao/web-terminal/compare) with the patch. 
+ * In the PR description, clearly describe both the problem and your solution. If this fix addresses a reported issue, please include the relevant issue number in the description.
+ 
+ ## Have a Question
+ If you have a question about contributing that wasn't answered here, or if you simply have a question about our project/codebase, please [contact us!](https://danielle-galvao.github.io/web-terminal/contact/)

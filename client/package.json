@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "ws": "node mock-backend.js"
+    "ws": "node mock-backend.js",
+    "compodoc": "npx compodoc -p tsconfig.app.json"
   },
   "private": true,
   "dependencies": {

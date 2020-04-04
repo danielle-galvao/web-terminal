@@ -6,7 +6,24 @@
   },
   "files": [
     "src/main.ts",
-    "src/polyfills.ts"
+    "src/polyfills.ts",
+	"src/app/app-routing.module.ts",
+	"src/app/app.component.ts",
+	"src/app/app.module.ts",
+	"src/app/authentication.guard.ts",
+	"src/app/backend.service.ts",
+	"src/app/websocket-provider.ts",
+	"src/app/auth-page/auth-page.component.ts",
+	"src/app/terminal/command-line/command-line.component.ts",
+	"src/app/terminal/history-command/history-command.component.ts",
+	"src/app/terminal/history-output/history-output.component.ts",
+	"src/app/terminal/history/history.component.ts",
+	"src/app/terminal/man-page/man-page.component.ts",
+	"src/app/terminal/pipeline/pipeline.component.ts",
+	"src/app/terminal/sidebar/sidebar.component.ts",
+	"src/app/terminal/terminal-page/terminal-page.component.ts",
+	"src/app/terminal/terminal-routing.module.ts",
+	"src/app/terminal/terminal.module.ts"
   ],
   "include": [
     "src/**/*.d.ts"

@@ -8,34 +8,32 @@ layout: default
   A machine with:
     <ol>
     <li>Node.js and NPM installed. Download the Node.js source code or a pre-built installer for your platform <a href="https://nodejs.org/en/download/" target="_blank">here!</a></li>
-    <li>Angular CLI  installed. <a href="https://cli.angular.io/" target="_blank">Angular CLI </a>is the official tool for initializing and working with Angular projects. Install it by executing the following command in a new terminal:</li>
       
- 
+    <li>Angular CLI  installed. <a href="https://cli.angular.io/" target="_blank">Angular CLI </a>is the official tool for initializing and working with Angular projects. Install it by executing the following command in a new terminal:</li></p>
   <pre><code>
   $ npm install -g @angular/cli
   </code></pre>
-     
-  <li>Python <a href="https://pypi.org/project/websockets/3.3/" target="_blank">websockets library</a> installed. This is a library for developing WebSocket servers and clients in Python. Install it by executing the following command:</li>
-       
+      
+<p><li>Python <a href="https://pypi.org/project/websockets/3.3/" target="_blank">websockets library</a> installed. This is a library for developing WebSocket servers and clients in Python. Install it by executing the following command:</li></p>
   <pre><code>
   $ pip install websockets
   </code></pre>
-   </ol>
-   </p>
+  </ol>
+   
   <h2>Installation Option 1: Download packaged executable</h2>
   <p> TODO: Add instructions for this later </p>
   <br>
   <h2>Installation Option 2: Download code and build manually</h2>
-  <p> 1. Clone the web-terminal repository
+<p> 1. Clone the web-terminal repository</p>
   <pre><code>
   $ git clone https://github.com/danielle-galvao/web-terminal.git
   $ cd web-terminal
   </code></pre>
-  2. Navigate to root folder of Angular app
+<p>2. Navigate to root folder of Angular app</p>
    <pre><code>
   $ cd web-terminal/client
   </code></pre>
-  3. Install necessary Node.js modules
+<p>3. Install necessary Node.js modules</p>
   <pre><code>
     $ npm install
   </code></pre>
@@ -62,8 +60,8 @@ layout: default
   </code></pre>
 <p>3. To view the Web-Terminal app, open browser of choice and navigate to that localhost address.</p>
 <h2>Usage</h2>
-<p>Once you have completed the <a href="#running">above steps to start running</a> Web-Terminal, you are now ready to begin using the terminal interface! Here's how:<br>
-  1. Authenticate yourself using provided one-time token/password to begin using the terminal interface.<br><br>
+<p>Once you have completed the <a href="#running">above steps to start running</a> Web-Terminal, you are now ready to begin using the terminal interface! Here's how:<br><br>
+  1. Authenticate yourself using provided one-time token/password to begin using the terminal interface.<br>
   For security purposes, upon opening the Web-Terminal app in your browser, you will reach an Authentication Page. This page will require you to enter a unique one-time token/password for that terminal session. The message provided upon running the command to start the app's web server (Step 2 of <a href="#running">Running Instructions</a>) will provide you with the necessary token:</p>
   <pre><code>
   Starting web server, your token is: EXAMPLETOKEN
@@ -72,9 +70,24 @@ layout: default
   2. Upon successful authentication, you will reach the Web-Terminal terminal interface page. Click adjacent to the command line prompt "$" to begin entering text. Type your command and arguments and press Enter on your keyboard to execute.
 Web-Terminal supports many standard Linux commands.<br>
 Note: Your initial working directory will be the directory from which you executed the command to run the server<br><br>
-  3. Start programming! Make sure to first learn about all of Web-Terminal's features so you can take full advantage of all the tools and helpful technologies we've added to provide users with the best terminal experience possible!</p>
+  3. Start programming! Make sure to first <a href="#features">learn about all of Web-Terminal's features</a> so you can take full advantage of all the tools and helpful technologies we've added to provide users with the best terminal experience possible!</p>
 
 <h2 id="features">Features and Demos</h2>
+<p><ul>
+  <li>Pop-up man pages<br>
+User can highlight and right click on a command - one that they have are currently inputting or one that they have previously entered - and be given the option to view the man page for that command. A link to that man page will be opened in a pop-up window allowing the user to easily reference helpful information without interrupting their workflow.</li>
+  <li>Display image preview using ls command<br>
+    When a user runs the ls command, if there are any images in the given directory, a preview of that image will actually be displayed to the user rather than just its title. This provides the user with an improved visual experience, allowing them to actually see and thus more quickly identify the content they are looking for. Furthermore, interactive links are provided to other files within the directory so a user can click on and actually view the file within their browser.</li>
+  <li>Insert breakpoints into pipelines<br>
+    When a user is inputting a command with pipes, they can choose to add a breakpoint at a given pipe in the line, and be given back the output up until that point. The user can highlight the command up to and including the pipe at which they'd like to add a breakpoint, and right click to be given the option to do so. This will insert a red circle in place of the pipe to demonstrate the breakpoint location.</li>
+  <li>Buttons to toggle display of stdout, stdin, stderr</li>
+  <li>Button to copy and paste previous commands</li>
+  <li>Side Menu Bar</li>
+  <li>Authentication Page to ensure security of Web-Terminal session</li>
+</ul></p>
+  
+
+    
 
 </body>
 

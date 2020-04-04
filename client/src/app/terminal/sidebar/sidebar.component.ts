@@ -9,6 +9,9 @@ export class SidebarComponent implements OnInit {
 
   constructor() { }
 
+  /**
+  * Initiates collapsibility functionality for menu items in sidebar
+  **/
   ngOnInit(): void {
 	var coll = document.getElementsByClassName("collapsible");
 	var i;
@@ -26,15 +29,20 @@ export class SidebarComponent implements OnInit {
 	}
   }
 
-
+/**
+* Displays sidebar by setting width and displays button to close sidebar
+**/
 openNav(){
 	document.getElementById("mySidebar").style.width = "250px";
 	document.getElementById("closebtn").style.display = "block";
 }
 
+/**
+* Closes sidebar by setting width to zero and hides display of button to close sidebar
+*/
 closeNav(){
-document.getElementById("mySidebar").style.width = "0";
-document.getElementById("closebtn").style.display = "none";
+	document.getElementById("mySidebar").style.width = "0";
+	document.getElementById("closebtn").style.display = "none";
 }
 
 }

@@ -4,7 +4,8 @@ layout: default
 <head>
 <style>
 div.basic{
-text-align: center;
+  display:none;
+  text-align: center;
   width: 100%;
   }
 div.gallery {
@@ -12,6 +13,7 @@ div.gallery {
   border: 1px solid #ccc;
   float: left;
   width: 150px;
+  height: 300px;
 }
 
 div.gallery:hover {
@@ -21,6 +23,9 @@ div.gallery:hover {
 div.gallery img {
   width: 100%;
   height: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
 }
 
 div.desc {
@@ -46,7 +51,7 @@ div.desc {
   <a target="_blank" href="images/ls-images.jpg">
     <img src="images/ls-images.jpg" alt="Image Previews" width="600" height="400">
   </a>
-  <div class="desc">Display previews of images in directory using ls</div>
+  <div class="desc">Images previews with ls command</div>
 </div>
 
 <div class="gallery">
@@ -60,7 +65,7 @@ div.desc {
   <a target="_blank" href="images/copy-command.gif">
     <img src="images/copy-command.gif" alt="Copy Command" width="600" height="400">
   </a>
-  <div class="desc">Button to copy and paste previous commands</div>
+  <div class="desc">Copy/paste previous commands</div>
 </div>
   <br><br>
   <div class="basic">

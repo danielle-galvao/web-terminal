@@ -9,12 +9,12 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
-        python-version: [3.x']
+        python-version: [3.x]
 
     steps:
-      - uses: actions/checkout@
+      - uses: actions/checkout@v2
         with:
-        - fetch-depth: 0
+          fetch-depth: 0
 
       - name: Check Version Match
         run: grep "version = '${{ github.event.pull_request.title }}'" setup.py
@@ -40,7 +40,7 @@ jobs:
         working-directory: ./client
         run: npm run build -- --prod --configuration=flask
 
-      - uses: actions/setup-python@
+      - uses: actions/setup-python@v1
         with:
           python-version: ${{ matrix.python-version }}
           architecture: 'x64'
@@ -55,9 +55,9 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install Python Dependencies
-          run: |
-            python3 -m pip install --upgrade pip
-            python3 -m pip install --user --upgrade setuptools wheel twine
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install --user --upgrade setuptools wheel twine
 
       - name: Create Distributions
         run: |

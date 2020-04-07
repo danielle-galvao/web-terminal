@@ -1,0 +1,70 @@
+name: Check Release
+on: 
+  pull_request:
+    branches:
+      - releases
+jobs:
+  check-release:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+        python-version: [3.x']
+
+    steps:
+      - uses: actions/checkout@
+        with:
+        - fetch-depth: 0
+
+      - name: Check Version Match
+        run: grep "version = '${{ github.event.pull_request.title }}'" setup.py
+
+      - name: Cache Node Modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Dependencies
+        working-directory: ./client
+        run: npm ci
+
+      - name: Build Client
+        working-directory: ./client
+        run: npm run build -- --prod --configuration=flask
+
+      - uses: actions/setup-python@
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: 'x64'
+
+      - name: Cache Pip
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
+
+      - name: Install Python Dependencies
+          run: |
+            python3 -m pip install --upgrade pip
+            python3 -m pip install --user --upgrade setuptools wheel twine
+
+      - name: Create Distributions
+        run: |
+          python3 setup.py sdist --formats=gztar
+          python3 setup.py bdist_wheel
+
+      - name: Check Asset Names
+        run: |
+          ls ./dist/web_terminal-${{ github.event.pull_request.title }}.tar.gz
+          ls ./dist/web_terminal-${{ github.event.pull_request.title }}-py3-none-any.whl

@@ -2,11 +2,9 @@ import queue, subprocess, sys, threading, os
 import asyncio, websockets
 import json
 
-from server import token
+from .server import token
+from .sugar import sugar, handle_command, ls_to_html
 
-import sugar
-
-# token = "token" if len(sys.argv) <= 1 else sys.argv[1]
 authenticated = set()
 
 async def recv_connection(websocket, path, token):
@@ -22,9 +20,9 @@ async def recv_message(websocket, message, token):
     message_json = json.loads(message)
 
     if message_json["type"] == "authentication":
-        print(token)
+        print(token())
         out = None
-        if message_json['payload']['token'] == token:
+        if message_json['payload']['token'] == token():
             authenticated.add(websocket)
             await websocket.send('{"type": "authentication", "payload": {"result": "ok"}}')
         else:
@@ -55,8 +53,8 @@ async def run_command(websocket, message_json):
 
     await write_message(websocket, json.dumps(STDOUT_JSON))
 
-    if cmd.split()[0] in sugar.sugar:
-        await write_message(websocket, sugar.handle_command(STDOUT_JSON))
+    if cmd.split()[0] in sugar:
+        await write_message(websocket, handle_command(STDOUT_JSON))
     else:
         await write_to_shell(cmd, websocket, message_json['payload']['clientId'])
 
@@ -113,7 +111,7 @@ async def write_to_shell(STDIN, websocket, client_id):
             STDOUT_JSON = json.loads(STDOUT_JSON)
 
             if 'ls' == STDIN.split()[0]:
-                STDOUT = sugar.ls_to_html(STDOUT)
+                STDOUT = ls_to_html(STDOUT)
             STDOUT = STDOUT.replace('\n', '<br>')
 
             # STDOUT_JSON["payload"]["output"]["combined"] = STDOUT

@@ -1,0 +1,106 @@
+name: Release
+on: 
+  pull_request:
+    types: [closed]
+    branches:
+      - releases
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+        python-version: [3.x]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Check Version Match
+        run: grep "version = '${{ github.event.pull_request.title }}'" setup.py
+
+      - name: Cache Node Modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Dependencies
+        working-directory: ./client
+        run: npm ci
+
+      - name: Build Client
+        working-directory: ./client
+        run: npm run build -- --prod --configuration=flask
+
+      - uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: 'x64'
+
+      - name: Cache Pip
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
+
+      - name: Install Python Dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install --user --upgrade setuptools wheel twine
+
+      - name: Create Distributions
+        run: |
+          python3 setup.py sdist --formats=gztar
+          python3 setup.py bdist_wheel
+
+      - name: Upload Distribution
+        run: python3 -m twine upload --non-interactive --repository-url https://upload.pypi.org/legacy/ dist/*
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.pypi_token }}
+      
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.event.pull_request.title }}
+          release_name: Release ${{ github.event.pull_request.title }}
+          body: ${{ github.event.pull_request.body }}
+          draft: false
+          prerelease: true
+
+      - name: Upload Tar Release Asset
+        id: upload-tar-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/web_terminal-${{ github.event.pull_request.title }}.tar.gz
+          asset_name: web_terminal-${{ github.event.pull_request.title }}.tar.gz
+          asset_content_type: application/gzip
+
+      - name: Upload Wheel Release Asset
+        id: upload-wheel-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/web_terminal-${{ github.event.pull_request.title }}-py3-none-any.whl
+          asset_name: web_terminal-${{ github.event.pull_request.title }}-py3-none-any.whl
+          asset_content_type: application/x-wheel+zip

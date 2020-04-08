@@ -12,7 +12,7 @@
 	"src/app/app.module.ts",
 	"src/app/authentication.guard.ts",
 	"src/app/backend.service.ts",
-	"src/app/websocket-provider.ts",
+	"src/app/websocket.service.ts",
 	"src/app/auth-page/auth-page.component.ts",
 	"src/app/terminal/command-line/command-line.component.ts",
 	"src/app/terminal/history-command/history-command.component.ts",

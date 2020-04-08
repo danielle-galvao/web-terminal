@@ -101,8 +101,8 @@
             "mockWebsocket": {
               "fileReplacements": [
                 {
-                  "replace": "src/app/websocket-provider.ts",
-                  "with": "src/app/websocket-provider.mock.ts"
+                  "replace": "src/app/websocket.service.ts",
+                  "with": "src/app/websocket.service.mock.ts"
                 }
               ]
             }

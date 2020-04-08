@@ -138,7 +138,7 @@ export class BackendService {
 }
 
 function mergeBreakpoints(history: { breakpoints: any[] }, update: { breakpoints: any[] }) {
-  for(let i = 0; i < update.breakpoints.length; i++) {
+  for(let i = 0; i < update.breakpoints?.length; i++) {
     history.breakpoints[i].stdout = (history.breakpoints[i].stdout || '') + update.breakpoints[i].stdout;
     history.breakpoints[i].stderr = (history.breakpoints[i].stderr || '') + update.breakpoints[i].sterr;
   }

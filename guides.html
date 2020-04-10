@@ -20,8 +20,24 @@ layout: default
   </code></pre>
   </ol>
    
-  <h2>Installation Option 1: Download packaged executable</h2>
-  <p> TODO: Add instructions for this later </p>
+  <h2>Installation Option 1: Download code and run packaged executable</h2>
+  <p> 1. Clone the web-terminal repository</p>
+  <pre><code>
+  $ git clone https://github.com/danielle-galvao/web-terminal.git
+  $ cd web-terminal
+  </code></pre>
+<p>2. Install necessary Node.js modules</p>
+  <pre><code>
+    $ npm install
+  </code></pre>
+<p> 3. Install project package</p>
+  <pre><code>
+    $ pip install web_terminal
+ </code></pre>
+  <p> 3. Run packaged executable</p>
+  <pre><code>
+    $ python -m web_terminal
+ </code></pre>
   <br>
   <h2>Installation Option 2: Download code and build manually</h2>
 <p> 1. Clone the web-terminal repository</p>
@@ -44,15 +60,16 @@ layout: default
 
 <h1>Running and Usage</h1>
 <h2 id="running">Running</h2>
-<p>Once you have completed all the <a href="#installation">instructions to install and build</a> the Web-Terminal app, you can perform the following steps to get the Web-Terminal app running:
+<p>Once you have completed all the <a href="#installation">instructions to install and build</a> the Web-Terminal app, you can perform the following steps to get the Web-Terminal app running:<br>
+  Note: If you followed the steps for Installation Option 1, the app's web server will already be running. You can skip Steps 1 and 2 below and begin at Step 3.
   <br><br>
-  1. Navigate to project's root folder</p>
+  1. Navigate to project's server folder</p>
    <pre><code>
-  $ cd web-terminal
+  $ cd web-terminal/server
   </code></pre>
   <p>2. Start the app's web server. Running this command will start serving the Web-Terminal interface on your localhost.</p>
    <pre><code>
-  $ python web-terminal.py
+  $ python web_terminal.py
   </code></pre>
   <p>The message provided upon running contains the localhost address including the port number which the server is running on:</p>
    <pre><code>

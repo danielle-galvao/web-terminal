@@ -61,8 +61,7 @@ jobs:
           python3 -m pip install --user --upgrade setuptools wheel twine
 
       - name: Create Distributions
-        run: |
-          python3 setup.py sdist --formats=gztar bdist_wheel
+        run: python3 setup.py sdist --formats=gztar bdist_wheel
 
       - name: Upload Distribution
         run: python3 -m twine upload --non-interactive --repository-url https://upload.pypi.org/legacy/ dist/*

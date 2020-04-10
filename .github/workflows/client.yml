@@ -1,5 +1,5 @@
 # This adapted from https://coryrylan.com/blog/building-angular-cli-projects-with-github-actions
-name: Client CI
+name: CI
 on: [push]
 
 jobs:
@@ -8,10 +8,11 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
+  
+  # TODO check that client changes before running
 
     steps:
-      - uses: actions/checkout@v1
-
+      - uses: actions/checkout@v2
       - name: Cache Node Modules
         uses: actions/cache@v1
         with:

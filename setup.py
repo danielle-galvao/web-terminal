@@ -8,10 +8,7 @@ setuptools.setup(
   packages = ['web_terminal'],
   package_dir = {'': 'server'},
   include_package_data = True,
-  package_data = {
-    "web_terminal": ["client/*"],
-  },
-  version = '0.2.0',
+  version = '0.2.1',
   license = 'BSD3',
   description = 'Web_Terminal is a server that gives an easy web-based interface to a terminal window, with plenty of nice features', #TODO
   long_description=long_description,

@@ -138,8 +138,8 @@ export class BackendService {
     console.log('Requesting ' + signal + ' on command ' + clientId);
 
     //TODO how handle?
-    this.websocket.next({type: "command", payload: {
-      type: signal,
+    this.websocket.next({type: "update", payload: {
+      type: 'signal',
       clientId,
       signal
     }});

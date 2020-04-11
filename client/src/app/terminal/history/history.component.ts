@@ -26,7 +26,7 @@ export class HistoryComponent implements OnChanges {
     fromEvent(document, 'keydown').pipe(
       takeUntil(this.command$.pipe(last())),
       filter(this.keybindService.getKeybindingFilter(KeybindValue.CTRL_C)),
-    ).subscribe(_ => this.backendService.signalCommand(this.commandId, 15));
+    ).subscribe(_ => this.backendService.signalCommand(this.commandId, 2));
   }
 
   toggleOutput() {

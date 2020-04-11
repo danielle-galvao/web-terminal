@@ -39,6 +39,27 @@ async def recv_message(websocket, message, token):
         else:
             await run_command(websocket, message_json)
 
+    elif message_json["type"] == "update":
+        if websocket not in authenticated:
+            STDOUT_JSON = '{"type": "update", "payload": {"result": "error", "message": "Not authenticated"}}'
+            STDOUT_JSON = json.loads(STDOUT_JSON)
+
+            STDOUT_JSON['payload']['clientId'] = message_json['payload']['clientId']
+
+            await websocket.send(json.dumps(STDOUT_JSON))
+        else:
+            payload = message_json['payload']
+            if payload['type'] == 'signal':
+                await send_signal(payload['signal'])
+            else:
+                STDOUT_JSON = '{"type": "update", "payload": {"result": "error", "message": "Unknown operation"}}'
+                STDOUT_JSON = json.loads(STDOUT_JSON)
+
+                STDOUT_JSON['payload']['clientId'] = message_json['payload']['clientId']
+
+                await websocket.send(json.dumps(STDOUT_JSON))
+
+
 async def write_message(websocket, message):
     print(f'> {message}')
     await websocket.send(message)
@@ -63,6 +84,9 @@ def enqueue_output(stream, queue):
     for line in iter(stream.readline, b''):
         queue.put(line)
     stream.close()
+
+async def send_signal(signal):
+    os.kill(shell_process.pid, signal)
 
 async def write_to_shell(STDIN, websocket, client_id):
     global shell_process

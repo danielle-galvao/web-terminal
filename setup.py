@@ -8,7 +8,7 @@ setuptools.setup(
   packages = ['web_terminal'],
   package_dir = {'': 'server'},
   include_package_data = True,
-  version = '0.2.1',
+  version = '0.2.2',
   license = 'BSD3',
   description = 'Web_Terminal is a server that gives an easy web-based interface to a terminal window, with plenty of nice features', #TODO
   long_description=long_description,
@@ -18,9 +18,9 @@ setuptools.setup(
   url = 'https://danielle-galvao.github.io/web-terminal/',
   keywords = ['web', 'terminal'],
   install_requires = [
-     #TODO
     'flask',
     'websockets',
+    'pkg_resources'
   ],
   classifiers = [
     'Development Status :: 3 - Alpha',

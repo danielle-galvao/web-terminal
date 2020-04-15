@@ -1,10 +1,12 @@
 from flask import Flask, send_from_directory, redirect
 from random import choice
 from string import ascii_uppercase
+from pkg_resources import resource_filename
 
 app = Flask(__name__)
 
 token_val = ''
+client_dir = resource_filename(__name__, 'client')
 
 def token():
     global token_val
@@ -22,13 +24,13 @@ def local_files(path):
 @app.route('/terminal/<path:path>', methods=['GET'])
 def angular_folders(path):
     try:
-        return send_from_directory('./client/', path)
+        return send_from_directory(client_dir, path)
     except:
         return redirect('/', code=301)
 
 @app.route('/terminal/')
 def terminal_root():
-        return send_from_directory('./client/', 'index.html')
+        return send_from_directory(client_dir, 'index.html')
 
 @app.route('/<path:path>')
 def catch_rest(path):

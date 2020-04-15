@@ -97,6 +97,7 @@ async def run_command(message_json):
 def enqueue_output(stream, queue):
     ''' Read from stream and put line in queue '''
     for line in iter(stream.readline, b''):
+        shell_shared_queue.put(True)
         queue.put(line)
     stream.close()
 
@@ -125,7 +126,7 @@ async def write_to_shell(STDIN, client_id):
 
     # Read output
     while True:
-        await asyncio.sleep(.1)
+        await asyncio.get_event_loop().run_in_executor(None, lambda: shell_shared_queue.get())
         try:
             new_stderr = shell_stderr_queue.get(False)
         except queue.Empty:
@@ -179,6 +180,9 @@ shell_process = subprocess.Popen(
 )
 
 websocket_queue  = asyncio.Queue()
+
+
+shell_shared_queue  = queue.Queue()
 
 shell_stdout_queue  = queue.Queue()
 shell_stdout_thread = threading.Thread(

@@ -5,5 +5,5 @@
         <button class="button1">stdin</button>
         <button class="button3">stderr</button>
     </div>
-    <web-terminal-history-output *ngIf="show" [output]="command.output"></web-terminal-history-output>
+    <web-terminal-history-output *ngIf="show" [output]="command.output.stdout"></web-terminal-history-output>
 </div>

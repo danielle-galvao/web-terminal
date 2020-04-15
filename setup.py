@@ -20,6 +20,7 @@ setuptools.setup(
   install_requires = [
     'flask',
     'websockets',
+    'psutil',
     'pkg_resources'
   ],
   classifiers = [
